@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Chicks Poultry Farm - Pure Rhode Island Reds in Cagayan Valley</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .hero-bg {
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://placehold.co/1920x1080/8B4513/FFFFFF?text=Healthy+Rhode+Island+Reds');
+            background-size: cover;
+            background-position: center;
+        }
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+        }
+        .brand-text {
+            color: #A0522D; /* Sienna Brown */
+        }
+        .brand-bg {
+            background-color: #A0522D;
+        }
+        .brand-bg-light {
+            background-color: #F5DEB3; /* Wheat */
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Header & Navigation -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="flex items-center">
+                <img src="./images/3.jpg" alt="Legal Chicks Poultry Farm Logo" class="h-12 w-auto"> <!-- Adjust h-12 as needed -->
+            </a>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="#about" class="text-gray-600 hover:brand-text transition">About Us</a>
+                <a href="#products" class="text-gray-600 hover:brand-text transition">Products</a>
+                <a href="#opportunity" class="text-gray-600 hover:brand-text transition">Opportunity</a>
+                <a href="#order" class="brand-bg text-white px-4 py-2 rounded-full hover:opacity-90 transition shadow-lg">Order Now</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden" aria-label="Open mobile menu" title="Open mobile menu">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                </svg>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#about" class="block py-2 text-gray-600 hover:brand-text transition">About Us</a>
+            <a href="#products" class="block py-2 text-gray-600 hover:brand-text transition">Products</a>
+            <a href="#opportunity" class="block py-2 text-gray-600 hover:brand-text transition">Opportunity</a>
+            <a href="#order" class="block mt-2 brand-bg text-white text-center px-4 py-2 rounded-full hover:opacity-90 transition shadow-lg">Order Now</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-bg text-white">
+            <div class="container mx-auto px-6 py-24 md:py-40 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight">Pure Rhode Island Reds, Raised with Passion</h1>
+                <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto">Strong Flocks. Healthy Food. Real Opportunities.</p>
+                <a href="#products" class="bg-white brand-text font-bold py-3 px-8 rounded-full text-lg hover:bg-gray-200 transition transform hover:scale-105 shadow-xl">Explore Our Poultry</a>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section id="about" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="section-title text-3xl md:text-4xl">Welcome to Legal Chicks Poultry Farm</h2>
+                    <p class="text-gray-600 mt-2 max-w-2xl mx-auto">Your trusted partner in building a productive and sustainable livelihood through poultry.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="fade-in">
+                        <img src=".\images\5.jpg" alt="A healthy flock of Rhode Island Red chickens" class="rounded-lg shadow-2xl">
+                    </div>
+                    <div class="fade-in">
+                        <div class="mb-8">
+                            <h3 class="text-2xl font-bold mb-3 flex items-center"><span class="brand-bg text-white rounded-full h-8 w-8 flex items-center justify-center mr-3">🎯</span> Our Mission</h3>
+                            <p class="text-gray-700 leading-relaxed">To provide families and farmers in Solana & Gattaran with healthy, productive poultry, creating lasting business opportunities and strengthening local food security for everyone.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-3 flex items-center"><span class="brand-bg text-white rounded-full h-8 w-8 flex items-center justify-center mr-3">🌟</span> Our Vision</h3>
+                            <p class="text-gray-700 leading-relaxed">To cultivate a thriving community of successful poultry raisers who grow, earn, and live sustainably with the dedicated support and quality flocks from Legal Chicks Farm.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products & Services Section -->
+        <section id="products" class="py-20 brand-bg-light">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="section-title text-3xl md:text-4xl">What We Offer</h2>
+                    <p class="text-gray-600 mt-2 max-w-2xl mx-auto">Quality products and dedicated support to guarantee your success.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Product Card 1: RIR Chicks -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-center hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 fade-in">
+                        <div class="text-5xl mb-4 brand-text">🐔</div>
+                        <h3 class="text-xl font-bold mb-2">Pure Rhode Island Reds</h3>
+                        <p class="text-gray-600 mb-4">Farm-raised for strength, adaptability, and superior egg production. Fully vaccinated and ready to thrive.</p>
+                        <div class="text-left bg-gray-100 p-3 rounded-md">
+                            <p class="font-semibold">0-1 week old: <span class="brand-text">₱150</span></p>
+                            <p class="text-sm text-gray-500">+₱70 per week increase.</p>
+                            <p class="text-sm font-bold mt-2 text-red-600">Limited stocks. Reservations required.</p>
+                            <p class="text-sm font-bold mt-2 text-red-600">Min. Order:</p>
+                            <p class="text-sm font-bold mt-2 text-red-600">                      Starters  = 20 heads</p>
+                            <p class="text-sm font-bold mt-2 text-red-600">                      Growers  = 10 heads</p>
+                            <p class="text-sm font-bold mt-2 text-red-600">                      Breeders = 5 heads</p>
+                            <img src="./images/0.jpg" alt="Rhode Island Red chick" class="w-full h-full object-cover rounded-lg mt-3 shadow-inner">
+                        </div>
+                    </div>
+                    <!-- Product Card 2: Fertile Eggs -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-center hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 fade-in">
+                        <div class="text-5xl mb-4 brand-text">🥚</div>
+                        <h3 class="text-xl font-bold mb-2">Farm-Fresh Fertile Eggs</h3>
+                        <p class="text-gray-600 mb-4">Collected daily for maximum freshness and viability. Perfect for hatching or consumption.</p>
+                         <div class="text-left bg-gray-100 p-3 rounded-md">
+                            <p class="font-semibold">Price per tray: <span class="brand-text">₱1200</span></p>
+                            <p class="text-sm text-gray-500">Naturally produced, no harmful chemicals.</p>
+                            <p class="text-sm font-bold mt-2 text-blue-600">Available for bulk orders.</p>
+                            <p class="text-sm font-bold mt-2 text-blue-600">Minimum Order of 1 Tray.</p>
+                            <img src="./images/5.jpg" alt="Farm fresh fertile eggs" class="w-full h-full object-cover rounded-lg shadow-2xl">
+                        </div>
+                    </div>
+                    <!-- Service Card 3: Consultations -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-center hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 fade-in">
+                       <div class="text-5xl mb-4 brand-text">💬</div>
+                        <h3 class="text-xl font-bold mb-2">Free Consultations</h3>
+                        <p class="text-gray-600 mb-4">FREE expert advice for all buyers. We provide personalized guidance on feeding, care, and management.</p>
+                         <div class="text-left bg-green-100 p-3 rounded-md">
+                            <p class="font-semibold text-green-800">Your success is our priority. We are here to help you every step of the way.</p>
+                        </div>
+                    </div>
+                    <!-- Service Card 4: Farm Visits -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-center hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 fade-in">
+                        <div class="text-5xl mb-4 brand-text">🏡</div>
+                        <h3 class="text-xl font-bold mb-2">Hands-On Farm Visits</h3>
+                        <p class="text-gray-600 mb-4">FREE for our clients! Visit our farm (by appointment) to learn practical flock management skills firsthand.</p>
+                        <div class="text-left bg-blue-100 p-3 rounded-md">
+                            <p class="font-semibold text-blue-800">See our best practices in action and apply them to your own flock.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Business Opportunity Section -->
+        <section id="opportunity" class="py-20 bg-gray-800 text-white">
+            <div class="container mx-auto px-6 text-center">
+                 <div class="max-w-3xl mx-auto">
+                    <h2 class="section-title text-3xl md:text-4xl mb-4">More Than a Supplier, We're Your Partner</h2>
+                    <p class="text-gray-300 mb-8 text-lg">Legal Chicks Farm is committed to helping you build a real, lasting livelihood. We don't just sell chickens—we provide a complete pathway to success.</p>
+                    <div class="bg-gray-700 p-8 rounded-xl shadow-lg border-l-4 border-yellow-400 fade-in">
+                        <p class="text-2xl italic font-light">“You don’t just buy chickens—you invest in food, income, and growth.”</p>
+                    </div>
+                    <a href="#order" class="mt-10 inline-block brand-bg text-white font-bold py-3 px-8 rounded-full text-lg hover:opacity-90 transition transform hover:scale-105 shadow-lg">Start Your Business Today</a>
+                 </div>
+            </div>
+        </section>
+
+        <!-- How to Order Section -->
+        <section id="order" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="section-title text-3xl md:text-4xl">Simple & Personal Ordering Process</h2>
+                    <p class="text-gray-600 mt-2 max-w-2xl mx-auto">We connect with you directly to ensure your order is perfect.</p>
+                </div>
+                <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8 items-center">
+                    <div class="fade-in">
+                        <img src=".\images\8.jpg" alt="Ordering process diagram" class="rounded-lg shadow-2xl">
+                    </div>
+                    <div class="space-y-6 fade-in">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 brand-bg text-white text-xl font-bold rounded-full h-12 w-12 flex items-center justify-center">1</div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-semibold">Send a Message</h3>
+                                <p class="text-gray-600">Click the "Send Message" button on our Facebook Page. Provide your Full Name, Contact Number, and the best time for us to call you.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 brand-bg text-white text-xl font-bold rounded-full h-12 w-12 flex items-center justify-center">2</div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-semibold">Personal Confirmation</h3>
+                                <p class="text-gray-600">Our team will personally call you to confirm your order details, answer your questions, and reserve your stocks.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                             <div class="flex-shrink-0 brand-bg text-white text-xl font-bold rounded-full h-12 w-12 flex items-center justify-center">3</div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-semibold">Choose Your Method</h3>
+                                <p class="text-gray-600">Decide between Farm Pick-Up at our Cagayan Valley location or Delivery (available in select areas of Solana & Gattaran).</p>
+                            </div>
+                        </div>
+                         <div class="flex items-start">
+                            <div class="flex-shrink-0 brand-bg text-white text-xl font-bold rounded-full h-12 w-12 flex items-center justify-center">4</div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-semibold">Secure Payment</h3>
+                                <p class="text-gray-600">Pay conveniently via GCash, Cash on Pick-up/Delivery, or a down payment for large reservations.</p>
+                            </div>
+                        </div>
+                         <div class="mt-8 text-center md:text-left">
+                            <a href="https://www.facebook.com/820697667788384" target="_blank" rel="noopener" class="brand-bg text-white font-bold py-3 px-8 rounded-full text-lg hover:opacity-90 transition shadow-lg inline-block">Message Us on Facebook</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <!-- Delivery & Policy Section -->
+        <section class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div class="fade-in">
+                        <h3 class="text-2xl font-bold mb-4 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-truck mr-2 brand-text" viewBox="0 0 16 16">
+                                <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-4 0H1.5A1.5 1.5 0 0 1 0 10.5v-7zM12 5H2v5.5A1.5 1.5 0 0 1 .5 12v-7A1.5 1.5 0 0 1 2 3.5h9A1.5 1.5 0 0 1 12 5zM14.5 12a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v6h2.5zM3 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm9 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                            </svg>
+                             Delivery & Pick-Up
+                        </h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                           <li><b>Farm Pick-up:</b> Available at our location in Cagayan Valley.</li>
+                           <li><b>Local Delivery:</b> We deliver to select areas within Solana & Gattaran.</li>
+                           <li><b>Nationwide Shipping:</b> For Visayas & Mindanao, fertile eggs can be shipped via LBC or other cargo couriers.</li>
+                        </ul>
+                    </div>
+                    <div class="fade-in">
+                         <h3 class="text-2xl font-bold mb-4 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-shield-check mr-2 brand-text" viewBox="0 0 16 16">
+                                <path d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.55.55 0 0 0 .101.025.615.615 0 0 0 .1-.025c.076-.023.174-.06.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.95- .325-1.882-.626-2.837-.855C8.36 1.114 8.176 1 8 1c-.176 0-.36.114-.662.59zM10.823 5.148l-3.428 3.428a.5.5 0 0 1-.708 0l-1.714-1.714a.5.5 0 1 1 .708-.708L7 7.793l3.065-3.065a.5.5 0 0 1 .708.708z"/>
+                            </svg>
+                            Important Reminders
+                        </h3>
+                         <ul class="list-disc list-inside space-y-2 text-gray-700">
+                           <li>All stocks are first-come, first-served.</li>
+                           <li>Orders are final only after personal confirmation.</li>
+                           <li>Farm visits are strictly by appointment only.</li>
+                           <li>Fertile eggs are fragile; handle with care upon receipt.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-10">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-2xl font-bold mb-2">Legal Chicks Poultry Farm</p>
+            <p class="mb-4">📍 Solana & Gattaran, Cagayan Valley, Philippines</p>
+            <p class="text-gray-400">&copy; <span id="year"></span> Legal Chicks Poultry Farm. All Rights Reserved. Built with care for our community.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Fade-in animation on scroll
+        const faders = document.querySelectorAll('.fade-in');
+        const appearOptions = {
+            threshold: 0.2,
+            rootMargin: "0px 0px -50px 0px"
+        };
+        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.classList.add('visible');
+                    appearOnScroll.unobserve(entry.target);
+                }
+            });
+        }, appearOptions);
+
+        faders.forEach(fader => {
+            appearOnScroll.observe(fader);
+        });
+
+    </script>
+</body>
+</html>
