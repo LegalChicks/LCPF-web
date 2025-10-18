@@ -219,6 +219,23 @@
          alt="Business Opportunity Background"
          class="w-full h-full object-cover opacity-50">
   </div>
+        <!-- Gemini Pro Tip Section -->
+        <section id="protip" class="py-20 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <div class="max-w-3xl mx-auto">
+                    <h2 class="section-title text-3xl md:text-4xl mb-4">✨ Farmer's Pro Tip</h2>
+                    <p class="text-gray-600 mb-8 text-lg">Get an AI-powered tip to help your flock thrive!</p>
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 p-6 rounded-lg shadow-lg min-h-[150px] flex items-center justify-center fade-in">
+                        <div id="tip-loader" class="text-center w-full">
+                            <div class="lds-ellipsis mx-auto"><div></div><div></div><div></div><div></div></div>
+                            <p class="mt-2">Fetching a fresh tip for you...</p>
+                        </div>
+                        <p id="tip-text" class="text-lg italic hidden"></p>
+                    </div>
+                    <button id="new-tip-button" class="mt-8 brand-bg text-white font-bold py-3 px-6 rounded-full text-lg hover:opacity-90 transition shadow-lg transform hover:scale-105">Get Another Tip!</button>
+                </div>
+            </div>
+        </section>
 
   <!-- Content -->
   <div class="relative z-10 container mx-auto px-6 text-center">
@@ -375,6 +392,7 @@
     </script>
 </body>
 </html>
+
 
 
 
