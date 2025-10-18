@@ -380,7 +380,223 @@
         </div>
     </footer>
 
+    <!-- AI Chatbot Bubble -->
+    <button id="chat-bubble" class="brand-bg text-white rounded-full p-4 shadow-lg hover:opacity-90 transition transform hover:scale-110">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-chat-dots-fill" viewBox="0 0 16 16">
+            <path d="M16 8c0 3.866-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7zM5 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+        </svg>
+    </button>
+    
+    <!-- AI Chatbot Modal -->
+    <div id="chat-modal-container" class="hidden">
+        <div class="modal-overlay"></div>
+        <div id="chat-modal" class="w-11/12 md:w-1/3 h-3/4 bg-white rounded-lg shadow-2xl flex flex-col">
+            <div class="p-4 border-b brand-bg text-white rounded-t-lg flex justify-between items-center">
+                <h3 class="font-bold text-lg">✨ AI Farm Assistant</h3>
+                <button id="close-chat-modal" class="font-bold">✕</button>
+            </div>
+            <div id="chat-messages" class="flex-1 p-4 overflow-y-auto bg-gray-100">
+                <!-- Messages will appear here -->
+                <div class="mb-2 text-sm p-3 bg-gray-200 text-gray-800 rounded-lg self-start w-fit max-w-xs">
+                    Hello! I'm the AI Assistant for Legal Chicks Farm. How can I help you plan your poultry business today?
+                </div>
+            </div>
+            <div id="chat-loader" class="p-4 hidden">
+                 <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+            </div>
+            <div class="p-4 border-t">
+                <form id="chat-form" class="flex">
+                    <input type="text" id="chat-input" class="flex-1 border rounded-l-lg p-2" placeholder="Ask about our chickens..." autocomplete="off">
+                    <button type="submit" class="brand-bg text-white font-bold p-2 rounded-r-lg">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Calculator Result Modal -->
+    <div id="calculator-modal-container" class="hidden">
+        <div class="modal-overlay"></div>
+        <div id="calculator-modal" class="w-11/12 md:w-1/2 bg-white rounded-lg shadow-2xl flex flex-col">
+            <div class="p-4 border-b brand-bg text-white rounded-t-lg flex justify-between items-center">
+                <h3 class="font-bold text-lg">✨ Your Poultry Business Projection</h3>
+                <button id="close-calculator-modal" class="font-bold">✕</button>
+            </div>
+            <div id="calculator-result" class="p-6 overflow-y-auto">
+                <!-- Result will appear here -->
+            </div>
+             <div id="calculator-loader" class="p-6 text-center hidden">
+                <div class="lds-ellipsis mx-auto"><div></div><div></div><div></div><div></div></div>
+                <p class="mt-2 text-gray-600">Our AI is running the numbers for you...</p>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // --- Gemini API Call ---
+        const API_KEY = ""; // No API Key needed, it's handled by the environment.
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${API_KEY}`;
+
+        async function callGemini(prompt, systemInstruction = null) {
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }],
+            };
+            if(systemInstruction) {
+                payload.systemInstruction = { parts: [{ text: systemInstruction }] };
+            }
+
+            let response;
+            let retries = 3;
+            let delay = 1000;
+
+            for (let i = 0; i < retries; i++) {
+                try {
+                    response = await fetch(API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        return result.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't get a response. Please try again.";
+                    } else {
+                        console.error("API call failed with status:", response.status);
+                    }
+                } catch (error) {
+                    console.error("Error calling Gemini API:", error);
+                }
+                await new Promise(res => setTimeout(res, delay));
+                delay *= 2; // Exponential backoff
+            }
+            return "An error occurred while contacting our AI assistant. Please check your connection and try again.";
+        }
+        
+        // --- Pro Tip Generator Logic ---
+        const tipLoader = document.getElementById('tip-loader');
+        const tipText = document.getElementById('tip-text');
+        const newTipButton = document.getElementById('new-tip-button');
+
+        async function getProTip() {
+            tipText.classList.add('hidden');
+            tipLoader.classList.remove('hidden');
+            newTipButton.disabled = true;
+
+            const prompt = "You are a poultry farming expert specializing in Rhode Island Reds in the tropical climate of the Philippines. Provide a single, concise, practical, and easy-to-understand tip for a beginner farmer. The tip should be no more than two sentences. For example: 'Ensure your flock always has access to clean, cool water, especially during hot afternoons, to prevent heat stress.' or 'Mix crushed malunggay (moringa) leaves into their feed for a natural boost of vitamins and minerals.'";
+
+            const tip = await callGemini(prompt);
+            
+            tipText.textContent = `"${tip}"`;
+            tipLoader.classList.add('hidden');
+            tipText.classList.remove('hidden');
+            newTipButton.disabled = false;
+        }
+
+        newTipButton.addEventListener('click', getProTip);
+
+        // --- Profit Calculator Logic ---
+        const calculatorForm = document.getElementById('calculator-form');
+        const calculatorModalContainer = document.getElementById('calculator-modal-container');
+        const closeCalculatorModalBtn = document.getElementById('close-calculator-modal');
+        const calculatorLoader = document.getElementById('calculator-loader');
+        const calculatorResult = document.getElementById('calculator-result');
+
+        calculatorForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const hens = document.getElementById('hens').value;
+            const roosters = document.getElementById('roosters').value;
+
+            if (!hens || !roosters || hens < 0 || roosters < 0) {
+                 // Using a custom modal for alerts would be better, but for simplicity:
+                const modal = document.createElement('div');
+                modal.innerHTML = `<div style="position:fixed; top:1rem; left:50%; transform:translateX(-50%); background-color: #ef4444; color:white; padding: 1rem; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index:200;">Please enter a valid number of hens and roosters.</div>`;
+                document.body.appendChild(modal);
+                setTimeout(() => document.body.removeChild(modal), 3000);
+                return;
+            }
+
+            calculatorModalContainer.classList.remove('hidden');
+            calculatorResult.classList.add('hidden');
+            calculatorLoader.classList.remove('hidden');
+
+            const prompt = `You are a poultry farming business consultant in the Philippines. A customer is planning to start a farm with ${hens} Rhode Island Red hens and ${roosters} roosters from Legal Chicks Poultry Farm in Cagayan Valley. Create a simple, encouraging, one-year business projection. Estimate potential weekly egg production (assume a conservative lay rate for RIRs), potential weekly revenue from selling eggs (use current market prices for free-range eggs in the Philippines in PHP), and estimated weekly feed costs. Provide a short paragraph of encouraging advice for a beginner. The tone should be optimistic but realistic. Format the output using markdown with headings for 'Weekly Egg Production', 'Potential Weekly Revenue', 'Estimated Weekly Feed Costs', and 'Friendly Advice'.`;
+
+            const resultText = await callGemini(prompt);
+            
+            // Basic markdown to HTML
+            let htmlResult = resultText
+                .replace(/### (.*)/g, '<h3 class="text-xl font-bold brand-text mt-4 mb-2">$1</h3>')
+                .replace(/## (.*)/g, '<h2 class="text-2xl font-bold brand-text mt-4 mb-2">$1</h2>')
+                .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                .replace(/\* ([^*]+)/g, '<li class="ml-5 list-disc">$1</li>')
+                .replace(/\n/g, '<br>');
+
+            calculatorResult.innerHTML = htmlResult;
+            calculatorLoader.classList.add('hidden');
+            calculatorResult.classList.remove('hidden');
+        });
+
+        closeCalculatorModalBtn.addEventListener('click', () => {
+            calculatorModalContainer.classList.add('hidden');
+        });
+        
+        // --- Chatbot Logic ---
+        const chatBubble = document.getElementById('chat-bubble');
+        const chatModalContainer = document.getElementById('chat-modal-container');
+        const closeChatModalBtn = document.getElementById('close-chat-modal');
+        const chatForm = document.getElementById('chat-form');
+        const chatInput = document.getElementById('chat-input');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatLoader = document.getElementById('chat-loader');
+
+        chatBubble.addEventListener('click', () => chatModalContainer.classList.remove('hidden'));
+        closeChatModalBtn.addEventListener('click', () => chatModalContainer.classList.add('hidden'));
+
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const userMessage = chatInput.value.trim();
+            if (!userMessage) return;
+
+            // Display user message
+            appendMessage(userMessage, 'user');
+            chatInput.value = '';
+            chatLoader.classList.remove('hidden');
+
+            const systemPrompt = `You are the friendly and knowledgeable AI Farm Assistant for Legal Chicks Poultry Farm, located in Solana & Gattaran, Cagayan Valley, Philippines. Your goal is to answer customer questions accurately based ONLY on the following information and guide them to order. You are not to make up any information. If you don't know the answer, politely say you need to check with the farm team and ask the user to send a message on Facebook.
+- **Business:** Legal Chicks Poultry Farm
+- **Location:** Solana & Gattaran, Cagayan Valley, Philippines
+- **Main Product:** Pure, vaccinated Rhode Island Reds (RIR). No other breeds.
+- **RIR Pricing:** Starts at ₱150 for 0-1 week old chicks, with a ₱70 increase per week. Stocks are limited and require reservation.
+- **Other Product:** Fertile eggs, sold per tray at ₱1200.
+- **Support:** Free consultations and farm visits (by appointment) for all buyers. We guide beginners on care, feeding, and starting a poultry business.
+- **Delivery:** Pick-up is available. Delivery is only in select areas of Solana & Gattaran. Fertile eggs can be shipped to Visayas/Mindanao via courier.
+- **How to Order:** The ONLY way to order is to send a message on our Facebook page with their Full Name, Contact Number, and preferred call time. Our team will then call them personally to confirm.
+- **Payment:** GCash, cash on pick-up/delivery, or down payment for large orders.
+- **Tagline:** 'Strong Flocks. Healthy Food. Real Opportunities.'
+- **Goal:** Encourage users to start their own poultry business.
+Your tone is professional, helpful, and encouraging. Keep answers concise.`;
+
+            const aiResponse = await callGemini(userMessage, systemPrompt);
+            chatLoader.classList.add('hidden');
+            appendMessage(aiResponse, 'ai');
+        });
+
+        function appendMessage(message, sender) {
+            const messageDiv = document.createElement('div');
+            let classes = 'mb-2 text-sm p-3 rounded-lg w-fit max-w-xs text-left';
+            if (sender === 'user') {
+                classes += ' bg-blue-500 text-white self-end ml-auto';
+            } else {
+                classes += ' bg-gray-200 text-gray-800 self-start';
+            }
+            messageDiv.className = classes;
+            // A simple way to render markdown-like newlines
+            messageDiv.innerHTML = message.replace(/\n/g, '<br>');
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+
+        // --- Page Setup ---
         // Mobile menu toggle
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -411,10 +627,14 @@
         faders.forEach(fader => {
             appearOnScroll.observe(fader);
         });
+        
+        // Initial call for the Pro Tip
+        getProTip();
 
     </script>
 </body>
 </html>
+
 
 
 
