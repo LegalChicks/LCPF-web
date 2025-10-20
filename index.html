@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Use Inter Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
         /* Custom styles and color palette based on the logo's earthy tones */
         :root {
@@ -54,6 +55,16 @@
         .logo-img {
             max-height: 55px;
             width: auto;
+        }
+
+        /* NEW: Hero Background with 50% Opacity Overlay */
+        .hero-background {
+            /* Linear gradient adds a 50% opaque layer of the primary color over the image */
+            background-image: linear-gradient(rgba(139, 84, 47, 0.5), rgba(139, 84, 47, 0.5)), url('uploaded:change the _POULTRY .jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
         }
     </style>
 </head>
@@ -406,5 +417,6 @@
     </script>
 </body>
 </html>
+
 
 
