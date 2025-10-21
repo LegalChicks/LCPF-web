@@ -1,24 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Legal Chicks Empowerment Network (LCEN)</title>
-    <!-- Load Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Use Inter Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        /* Custom styles and color palette based on the logo's earthy tones */
-        :root {
-            --color-primary: #8B542F; /* Dark Brown/Coffee */
-            --color-secondary: #E3793D; /* Orange/Rust */
-            --color-accent: #F9A825; /* Gold/Yellow-Orange */
-            --color-text-dark: #374151;
-            --color-text-light: #F9FAFB;
-        }
-
-        body { font-family: 'Inter', sans-serif; background-color: var(--color-text-light); color: var(--color-text-dark); }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Legal Chicks Empowerment Network (LCEN)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers"></script>
+  <style>
+    :root {
+      --color-primary: #8B542F;
+      --color-secondary: #E3793D;
+      --color-accent: #F9A825;
+      --color-text-dark: #374151;
+      --color-text-light: #F9FAFB;
+    }
+    body { font-family: 'Inter', sans-serif; background-color: var(--color-text-light); color: var(--color-text-dark); }
     .header-bg { background-color: var(--color-primary); }
     .btn-primary { background-color: var(--color-secondary); color: var(--color-text-light); }
     .btn-primary:hover { background-color: var(--color-accent); color: var(--color-text-dark); }
@@ -30,20 +27,47 @@
       background-image: linear-gradient(rgba(139,84,47,0.5), rgba(139,84,47,0.5)), url('uploaded:change the _POULTRY .jpg');
       background-size: cover; background-position: center; background-attachment: fixed;
     }
+
     /* Chatbot styles */
-    #chatbot-toggle { position: fixed; bottom: 20px; right: 20px; background: var(--color-secondary); color: white; padding: 12px 16px; border-radius: 9999px; cursor: pointer; z-index: 50; }
-    #chatbot-panel { position: fixed; bottom: 80px; right: 20px; width: 350px; max-height: 500px; background: white; border: 2px solid var(--color-primary); border-radius: 12px; display: none; flex-direction: column; z-index: 50; }
-    #chatbot-messages { flex: 1; overflow-y: auto; padding: 10px; font-size: 0.9rem; }
+    #chatbot-toggle {
+      position: fixed; bottom: 20px; right: 20px;
+      background: var(--color-secondary); color: white;
+      padding: 12px 16px; border-radius: 9999px;
+      cursor: pointer; z-index: 50;
+    }
+    #chatbot-panel {
+      position: fixed; bottom: 80px; right: 20px;
+      width: 350px; max-height: 500px;
+      background: white; border: 2px solid var(--color-primary);
+      border-radius: 12px; display: none;
+      flex-direction: column; z-index: 50;
+    }
+    #chatbot-messages {
+      flex: 1; overflow-y: auto; padding: 10px;
+      font-size: 0.9rem;
+    }
     .msg { margin-bottom: 10px; }
     .msg.user { text-align: right; }
     .msg.bot { text-align: left; }
-    .bubble { display: inline-block; padding: 8px 12px; border-radius: 12px; max-width: 80%; }
+    .bubble {
+      display: inline-block; padding: 8px 12px;
+      border-radius: 12px; max-width: 80%;
+    }
     .user .bubble { background: #f0faf4; border: 1px solid #c6f6d5; }
     .bot .bubble { background: #fff8f2; border: 1px solid #fbd38d; }
-    #chatbot-input { display: flex; border-top: 1px solid #ddd; }
-    #chatbot-input textarea { flex: 1; border: none; padding: 8px; resize: none; }
-    #chatbot-input button { background: var(--color-primary); color: white; padding: 8px 12px; border: none; }
+    #chatbot-input {
+      display: flex; border-top: 1px solid #ddd;
+    }
+    #chatbot-input textarea {
+      flex: 1; border: none; padding: 8px; resize: none;
+    }
+    #chatbot-input button {
+      background: var(--color-primary); color: white;
+      padding: 8px 12px; border: none;
+    }
   </style>
+
+
 
 </head>
 <body class="antialiased">
@@ -106,6 +130,16 @@
             </div>
         </div>
     </section>
+
+  <!-- Chatbot UI -->
+  <div id="chatbot-toggle">💬 Chat</div>
+  <div id="chatbot-panel" class="flex">
+    <div id="chatbot-messages"></div>
+    <div id="chatbot-input">
+      <textarea id="chatbot-text" rows="2" placeholder="Ask me about LCEN..."></textarea>
+      <button id="chatbot-send">Send</button>
+    </div>
+  </div>
 
     <!-- Mission, Vision, and Values Section -->
     <section class="py-16 bg-white">
@@ -389,107 +423,116 @@
 
     <script>
   <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers"></script>
-  <script>
-    const toggleBtn = document.getElementById("chatbot-toggle");
-    const panel = document.getElementById("chatbot-panel");
-    const messagesEl = document.getElementById("chatbot-messages");
-    const inputEl = document.getElementById("chatbot-text");
-    const sendBtn = document.getElementById("chatbot-send");
+<script>
+  const toggleBtn = document.getElementById("chatbot-toggle");
+  const panel = document.getElementById("chatbot-panel");
+  const messagesEl = document.getElementById("chatbot-messages");
+  const inputEl = document.getElementById("chatbot-text");
+  const sendBtn = document.getElementById("chatbot-send");
 
-    let generator, embedder;
-    let sections = [], sectionEmbeddings = [];
+  let generator, embedder;
+  let sections = [], sectionEmbeddings = [];
 
-    toggleBtn.addEventListener("click", () => {
-      panel.style.display = panel.style.display === "flex" ? "none" : "flex";
-    });
+  toggleBtn.addEventListener("click", () => {
+    panel.style.display = panel.style.display === "flex" ? "none" : "flex";
+  });
 
-    function addMessage(role, text) {
-      const msg = document.createElement("div");
-      msg.className = "msg " + role;
-      const bubble = document.createElement("div");
-      bubble.className = "bubble";
-      bubble.textContent = text;
-      msg.appendChild(bubble);
-      messagesEl.appendChild(msg);
-      messagesEl.scrollTop = messagesEl.scrollHeight;
+  function addMessage(role, text) {
+    const msg = document.createElement("div");
+    msg.className = "msg " + role;
+    const bubble = document.createElement("div");
+    bubble.className = "bubble";
+    bubble.textContent = text;
+    msg.appendChild(bubble);
+    messagesEl.appendChild(msg);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function meanPool(matrix) {
+    return matrix[0].map((_, i) => matrix.reduce((sum, row) => sum + row[i], 0) / matrix.length);
+  }
+
+  function cosineSim(a, b) {
+    let dot = 0, normA = 0, normB = 0;
+    for (let i = 0; i < a.length; i++) {
+      dot += a[i] * b[i];
+      normA += a[i] * a[i];
+      normB += b[i] * b[i];
     }
+    return dot / (Math.sqrt(normA) * Math.sqrt(normB));
+  }
 
-    async function init() {
-      addMessage("bot", "Loading models and reading the site...");
-      embedder = await window.transformers.pipeline("feature-extraction", "Xenova/all-MiniLM-L6-v2");
-      generator = await window.transformers.pipeline("text-generation", "Xenova/distilgpt2");
+  async function semanticSearch(query) {
+    const emb = await embedder(query);
+    const queryVec = meanPool(emb[0]);
 
-      // Extract sections from the current page
-      const nodes = [...document.querySelectorAll("h2, p, li")];
-      sections = nodes.map(n => n.textContent.trim()).filter(t => t.length > 0);
-
-      for (let sec of sections) {
-        const emb = await embedder(sec);
-        sectionEmbeddings.push(meanPool(emb[0]));
+    let best = { score: -1, section: null };
+    for (let i = 0; i < sections.length; i++) {
+      const score = cosineSim(queryVec, sectionEmbeddings[i]);
+      if (score > best.score) {
+        best = { score, section: sections[i] };
       }
-
-      addMessage("bot", "Hello! I’ve read this page. Ask me about LCEN’s mission, programs, or opportunities.");
     }
+    return best.score >= 0.4 ? best.section : null;
+  }
 
-    function meanPool(matrix) {
-      return matrix[0].map((_, i) => matrix.reduce((sum, row) => sum + row[i], 0) / matrix.length);
-    }
+  async function sendMessage() {
+    const text = inputEl.value.trim();
+    if (!text) return;
+    addMessage("user", text);
+    inputEl.value = "";
+    sendBtn.disabled = true;
 
-    function cosineSim(a, b) {
-      let dot = 0, normA = 0, normB = 0;
-      for (let i = 0; i < a.length; i++) {
-        dot += a[i] * b[i];
-        normA += a[i] * a[i];
-        normB += b[i] * b[i];
-      }
-      return dot / (Math.sqrt(normA) * Math.sqrt(normB));
-    }
-
-    async function semanticSearch(query) {
-      const emb = await embedder(query);
-      const queryVec = meanPool(emb[0]);
-
-      let best = { score: -1, section: null };
-      for (let i = 0; i < sections.length; i++) {
-        const score = cosineSim(queryVec, sectionEmbeddings[i]);
-        if (score > best.score) {
-          best = { score, section: sections[i] };
-        }
-      }
-      return best.score >= 0.4 ? best.section : null;
-    }
-
-    async function sendMessage() {
-      const text = inputEl.value.trim();
-      if (!text) return;
-      addMessage("user", text);
-      inputEl.value = "";
-      sendBtn.disabled = true;
-
-      const section = await semanticSearch(text);
-      if (section) {
-        addMessage("bot", "From site: " + section);
-        sendBtn.disabled = false;
-        return;
-      }
-
-      addMessage("bot", "Thinking...");
-      const output = await generator(text, { max_new_tokens: 60 });
-      messagesEl.lastChild.remove();
-      addMessage("bot", output[0].generated_text.replace(text, "").trim());
+    const section = await semanticSearch(text);
+    if (section) {
+      addMessage("bot", "From site: " + section);
       sendBtn.disabled = false;
+      return;
     }
 
-    sendBtn.addEventListener("click", sendMessage);
-    inputEl.addEventListener("keydown", e => {
-      if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        sendMessage();
-      }
-    });
+    addMessage("bot", "Thinking...");
+    const output = await generator(text, { max_new_tokens: 60 });
+    messagesEl.lastChild.remove();
+    addMessage("bot", output[0].generated_text.replace(text, "").trim());
+    sendBtn.disabled = false;
+  }
 
-    // Initialize chatbot
-    init();
+  inputEl.addEventListener("keydown", e => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+
+  async function init() {
+    addMessage("bot", "⏳ Loading models and reading the site...");
+    embedder = await window.transformers.pipeline("feature-extraction", "Xenova/all-MiniLM-L4-v2");
+    generator = await window.transformers.pipeline("text-generation", "Xenova/distilgpt2");
+
+    const nodes = [
+      ...document.querySelectorAll("h2"),
+      ...document.querySelectorAll(".section-header"),
+      ...document.querySelectorAll(".card-shadow p")
+    ];
+    sections = nodes.map(n => n.textContent.trim()).filter(t => t.length > 0);
+
+    for (let sec of sections) {
+      const emb = await embedder(sec);
+      sectionEmbeddings.push(meanPool(emb[0]));
+    }
+
+    addMessage("bot", "✅ Ready! Ask me anything about LCEN’s mission, programs, or opportunities.");
+  }
+
+  init(addMessage("bot", "✅ Ready! I’ve read this page. Ask me anything about LCEN’s mission, programs, or opportunities.");
+addMessage("bot", "💡 You can try asking:");
+addMessage("bot", "• What’s included in the starter package?");
+addMessage("bot", "• How do I join the Legal Chicks network?");
+addMessage("bot", "• What areas do you serve?");
+addMessage("bot", "• What is LCEN’s business model?");
+addMessage("bot", "• What makes LCEN different from other poultry programs?"););
+
+
 
 
         // Toggle mobile menu visibility
