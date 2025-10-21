@@ -1,85 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Legal Chicks Empowerment Network (LCEN)</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers"></script>
-  <style>
-    :root {
-      [cite_start]--color-primary: #8B542F; [cite: 1]
-      [cite_start]--color-secondary: #E3793D; [cite: 2]
-      [cite_start]--color-accent: #F9A825; [cite: 2]
-      [cite_start]--color-text-dark: #374151; [cite: 2]
-      [cite_start]--color-text-light: #F9FAFB; [cite: 2]
-    }
-    [cite_start]body { font-family: 'Inter', sans-serif; background-color: var(--color-text-light); [cite: 2]
-      color: var(--color-text-dark); [cite_start]} [cite: 3]
-    .header-bg { background-color: var(--color-primary); [cite_start]} [cite: 3]
-    [cite_start].btn-primary { background-color: var(--color-secondary); color: var(--color-text-light); [cite: 3]
-    [cite_start]} [cite: 4]
-    .btn-primary:hover { background-color: var(--color-accent); color: var(--color-text-dark); [cite_start]} [cite: 4]
-    [cite_start].section-header { border-left: 6px solid var(--color-secondary); [cite: 4]
-      padding-left: 1.25rem; [cite_start]} [cite: 5]
-    [cite_start].card-shadow { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); transition: transform 0.3s; [cite: 5]
-    [cite_start]} [cite: 6]
-    .card-shadow:hover { transform: translateY(-5px); [cite_start]} [cite: 6]
-    [cite_start].logo-img { max-height: 55px; width: auto; [cite: 6]
-    [cite_start]} [cite: 7]
-    .hero-background {
-      /* FIXED: Changed placeholder path to a relative one */
-      [cite_start]background-image: linear-gradient(rgba(139,84,47,0.5), rgba(139,84,47,0.5)), url('./hero-background.jpg'); [cite: 7]
-      [cite_start]background-size: cover; [cite: 7]
-      [cite_start]background-position: center; background-attachment: fixed; [cite: 8]
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Chicks Empowerment Network (LCEN)</title>
+    <script src="https://cdn.tailwindcss.com" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers" defer></script>
+    <style>
+        :root {
+            --color-primary: #8B542F;
+            --color-secondary: #E3793D;
+            --color-accent: #F9A825;
+            --color-text-dark: #374151;
+            --color-text-light: #F9FAFB;
+        }
 
-    /* Chatbot styles */
-    #chatbot-toggle {
-      [cite_start]position: fixed; [cite: 8]
-      [cite_start]bottom: 20px; right: 20px; [cite: 9]
-      [cite_start]background: var(--color-secondary); color: white; [cite: 9]
-      [cite_start]padding: 12px 16px; border-radius: 9999px; [cite: 9]
-      [cite_start]cursor: pointer; z-index: 50; [cite: 9]
-    [cite_start]} [cite: 10]
-    #chatbot-panel {
-      [cite_start]position: fixed; bottom: 80px; right: 20px; [cite: 10]
-      [cite_start]width: 350px; [cite: 10]
-      [cite_start]max-height: 500px; [cite: 11]
-      [cite_start]background: white; border: 2px solid var(--color-primary); [cite: 11]
-      [cite_start]border-radius: 12px; display: none; [cite: 11]
-      [cite_start]flex-direction: column; z-index: 50; [cite: 11]
-    [cite_start]} [cite: 12]
-    #chatbot-messages {
-      [cite_start]flex: 1; overflow-y: auto; padding: 10px; [cite: 12]
-      [cite_start]font-size: 0.9rem; [cite: 12]
-    [cite_start]} [cite: 13]
-    .msg { margin-bottom: 10px; [cite_start]} [cite: 13]
-    [cite_start].msg.user { text-align: right; [cite: 13]
-    [cite_start]} [cite: 14]
-    .msg.bot { text-align: left; [cite_start]} [cite: 14]
-    .bubble {
-      [cite_start]display: inline-block; [cite: 14]
-      [cite_start]padding: 8px 12px; [cite: 15]
-      [cite_start]border-radius: 12px; max-width: 80%; [cite: 15]
-    }
-    [cite_start].user .bubble { background: #f0faf4; border: 1px solid #c6f6d5; [cite: 15]
-    [cite_start]} [cite: 16]
-    [cite_start].bot .bubble { background: #fff8f2; border: 1px solid #fbd38d; [cite: 16]
-    [cite_start]} [cite: 17]
-    #chatbot-input {
-      [cite_start]display: flex; border-top: 1px solid #ddd; [cite: 17]
-    [cite_start]} [cite: 18]
-    #chatbot-input textarea {
-      [cite_start]flex: 1; border: none; padding: 8px; resize: none; [cite: 18]
-    [cite_start]} [cite: 19]
-    #chatbot-input button {
-      [cite_start]background: var(--color-primary); color: white; [cite: 19]
-      [cite_start]padding: 8px 12px; [cite: 19]
-      [cite_start]border: none; [cite: 20]
-    }
-  </style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-text-light);
+            color: var(--color-text-dark);
+        }
+
+        .header-bg {
+            background-color: var(--color-primary);
+        }
+
+        .btn-primary {
+            background-color: var(--color-secondary);
+            color: var(--color-text-light);
+        }
+
+            .btn-primary:hover {
+                background-color: var(--color-accent);
+                color: var(--color-text-dark);
+            }
+
+        .section-header {
+            border-left: 6px solid var(--color-secondary);
+            padding-left: 1.25rem;
+        }
+
+        .card-shadow {
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+            .card-shadow:hover {
+                transform: translateY(-5px);
+            }
+
+        .logo-img {
+            max-height: 55px;
+            width: auto;
+        }
+
+        .hero-background {
+            /* Placeholder for hero background image, adjust path as needed */
+            background-image: linear-gradient(rgba(139,84,47,0.5), rgba(139,84,47,0.5)), url('./hero-background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* Chatbot styles */
+        #chatbot-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--color-secondary);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 9999px;
+            cursor: pointer;
+            z-index: 50;
+        }
+
+        #chatbot-panel {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 350px;
+            max-height: 500px;
+            background: white;
+            border: 2px solid var(--color-primary);
+            border-radius: 12px;
+            display: none; /* controlled by JS: toggles display:flex/none */
+            flex-direction: column;
+            z-index: 50;
+        }
+
+        #chatbot-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            font-size: 0.9rem;
+        }
+
+        .msg {
+            margin-bottom: 10px;
+        }
+
+            .msg.user {
+                text-align: right;
+            }
+
+            .msg.bot {
+                text-align: left;
+            }
+
+        .bubble {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 12px;
+            max-width: 80%;
+        }
+
+        .user .bubble {
+            background: #f0faf4;
+            border: 1px solid #c6f6d5;
+        }
+
+        .bot .bubble {
+            background: #fff8f2;
+            border: 1px solid #fbd38d;
+        }
+
+        #chatbot-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+
+            #chatbot-input textarea {
+                flex: 1;
+                border: none;
+                padding: 8px;
+                resize: none;
+                min-height: 48px;
+            }
+
+            #chatbot-input button {
+                background: var(--color-primary);
+                color: white;
+                padding: 8px 12px;
+                border: none;
+            }
+    </style>
 </head>
 <body class="antialiased">
 
@@ -87,45 +153,45 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <div class="flex-shrink-0 flex items-center">
-                    [cite_start]<img class="logo-img rounded-full mr-3" src="./33.png" alt="Legal Chicks Empowerment Network Logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/8B542F/F9FAFB?text=LCEN+Logo'"> [cite: 21]
-                    [cite_start]<span class="text-white text-xl font-bold hidden sm:block">LCEN</span> [cite: 21]
+                    <img class="logo-img rounded-full mr-3" src="./33.png" alt="Legal Chicks Empowerment Network Logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/8B542F/F9FAFB?text=LCEN+Logo'">
+                    <span class="text-white text-xl font-bold hidden sm:block">LCEN</span>
                 </div>
                 <nav class="hidden md:flex space-x-6 lg:space-x-8">
-                    [cite_start]<a href="#about" class="text-white hover:text-gray-200 text-base font-medium transition duration-150">Who We Are</a> [cite: 22]
-                    [cite_start]<a href="#what-we-do" class="text-white hover:text-gray-200 text-base font-medium transition duration-150">What We Do</a> [cite: 22]
-                    [cite_start]<a href="#partners" class="text-white hover:text-gray-200 text-base font-medium transition duration-150">Partners</a> [cite: 22]
-                    [cite_start]<a href="#model" class="text-white hover:text-gray-200 text-base font-medium transition duration-150">Model & Impact</a> [cite: 23]
-                    [cite_start]<a href="#connect" class="btn-primary py-2 px-4 rounded-lg font-bold shadow-md transition">Connect</a> [cite: 23]
+                    <a href="#about" class="text-white hover:text-gray-200 text-base font-medium transition duration-150">Who We Are</a>
+                    <a href="#what-we-do" class="text-white hover:text-gray-200 text-base font-medium transition duration-150">What We Do</a>
+                    <a href="#partners" class="text-white hover:text-gray-200 text-base font-medium transition duration-150">Partners</a>
+                    <a href="#model" class="text-white hover:text-gray-200 text-base font-medium transition duration-150">Model & Impact</a>
+                    <a href="#connect" class="btn-primary py-2 px-4 rounded-lg font-bold shadow-md transition">Connect</a>
                 </nav>
-                <button id="menu-button" class="md:hidden text-white p-2 rounded-lg hover:bg-opacity-10 transition">
-                    [cite_start]<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"> [cite: 24]
-                        [cite_start]<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /> [cite: 24]
+                <button id="menu-button" class="md:hidden text-white p-2 rounded-lg hover:bg-opacity-10 transition" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle site menu">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </button>
-            [cite_start]</div> [cite: 25]
+            </div>
         </div>
-        <div id="mobile-menu" class="md:hidden hidden bg-gray-800 absolute w-full shadow-lg">
+        <div id="mobile-menu" class="md:hidden hidden bg-gray-800 absolute w-full shadow-lg" role="menu" aria-hidden="true">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                [cite_start]<a href="#about" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Who We Are</a> [cite: 25]
-                [cite_start]<a href="#what-we-do" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">What We Do</a> [cite: 26]
-                [cite_start]<a href="#partners" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Partners</a> [cite: 26]
-                [cite_start]<a href="#model" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Model & Impact</a> [cite: 26]
-                [cite_start]<a href="#connect" class="btn-primary block w-full text-center mt-2 px-3 py-2 rounded-md text-base font-bold">Connect</a> [cite: 26]
-            [cite_start]</div> [cite: 27]
+                <a href="#about" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Who We Are</a>
+                <a href="#what-we-do" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">What We Do</a>
+                <a href="#partners" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Partners</a>
+                <a href="#model" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Model & Impact</a>
+                <a href="#connect" class="btn-primary block w-full text-center mt-2 px-3 py-2 rounded-md text-base font-bold">Connect</a>
+            </div>
         </div>
     </header>
 
-    [cite_start]<section id="about" class="relative hero-background py-16 sm:py-24"> [cite: 27]
+    <section id="about" class="relative hero-background py-16 sm:py-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white">
-                [cite_start]<span class="block">Legal Chicks Empowerment Network</span> [cite: 27]
-                [cite_start]<span class="block text-3xl sm:text-4xl text-[var(--color-accent)] mt-4 font-semibold">"From One Coop to a Community"</span> [cite: 28]
+                <span class="block">Legal Chicks Empowerment Network</span>
+                <span class="block text-3xl sm:text-4xl text-[var(--color-accent)] mt-4 font-semibold">"From One Coop to a Community"</span>
             </h1>
             <p class="mt-8 max-w-4xl mx-auto text-xl text-gray-100 leading-relaxed">
-                [cite_start]**Legal Chicks Empowerment Network (LCEN)** is a livelihood and agribusiness movement born in Cagayan Valley, Philippines, dedicated to empowering farmers, homemakers, and youth through **sustainable poultry farming.** [cite: 29]
+                <strong>Legal Chicks Empowerment Network (LCEN)</strong> is a livelihood and agribusiness movement born in Cagayan Valley, Philippines, dedicated to empowering farmers, homemakers, and youth through <strong>sustainable poultry farming.</strong>
             </p>
             <p class="mt-4 max-w-4xl mx-auto text-lg text-gray-200">
-                [cite_start]Founded by Legal Chicks Poultry Farm, LCEN bridges the gap between agripreneurship and community empowerment — helping ordinary Cagayanos transform their backyards into productive, income-generating poultry enterprises. [cite: 30]
+                Founded by Legal Chicks Poultry Farm, LCEN bridges the gap between agripreneurship and community empowerment — helping ordinary Cagayanos transform their backyards into productive, income-generating poultry enterprises.
             </p>
             <div class="mt-10 flex justify-center">
                 <a href="#what-we-do" class="btn-primary py-3 px-8 rounded-xl text-lg font-bold shadow-xl">
@@ -133,42 +199,43 @@
                 </a>
             </div>
         </div>
-    [cite_start]</section> [cite: 31]
+    </section>
 
-  [cite_start]<div id="chatbot-toggle">💬 Chat</div> [cite: 31]
-  [cite_start]<div id="chatbot-panel" class="flex"> [cite: 31]
-    [cite_start]<div id="chatbot-messages"></div> [cite: 31]
-    [cite_start]<div id="chatbot-input"> [cite: 31]
-      [cite_start]<textarea id="chatbot-text" rows="2" placeholder="Ask me about LCEN..."></textarea> [cite: 31]
-      [cite_start]<button id="chatbot-send">Send</button> [cite: 31]
+    <button id="chatbot-toggle" aria-controls="chatbot-panel" aria-expanded="false" aria-label="Open chat assistant">💬 Chat</button>
+
+    <div id="chatbot-panel" role="dialog" aria-modal="false" aria-hidden="true" tabindex="-1" class="chatbot-panel">
+        <div id="chatbot-messages" aria-live="polite"></div>
+        <div id="chatbot-input">
+            <textarea id="chatbot-text" rows="2" placeholder="Ask me about LCEN..." aria-label="Ask me about LCEN"></textarea>
+            <button id="chatbot-send" type="button" aria-label="Send message">Send</button>
+        </div>
     </div>
-  </div>
 
     <section class="py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-3 gap-10">
-                [cite_start]<div> [cite: 32]
-                    [cite_start]<h2 class="section-header text-3xl font-extrabold text-[var(--color-primary)] mb-4">🎯 Our Mission</h2> [cite: 32]
+                <div>
+                    <h2 class="section-header text-3xl font-extrabold text-[var(--color-primary)] mb-4">🎯 Our Mission</h2>
                     <p class="text-lg text-gray-700">
-                        [cite_start]To **equip and empower Cagayan farmers and families** with the knowledge, tools, and support they need to start and sustain profitable poultry businesses — creating livelihoods that last, communities that grow, and futures that thrive. [cite: 33]
-                    [cite_start]</p> [cite: 34]
+                        To <strong>equip and empower Cagayan farmers and families</strong> with the knowledge, tools, and support they need to start and sustain profitable poultry businesses — creating livelihoods that last, communities that grow, and futures that thrive.
+                    </p>
                 </div>
                 <div>
-                    [cite_start]<h2 class="section-header text-3xl font-extrabold text-[var(--color-primary)] mb-4">🌅 Our Vision</h2> [cite: 34]
+                    <h2 class="section-header text-3xl font-extrabold text-[var(--color-primary)] mb-4">🌅 Our Vision</h2>
                     <p class="text-lg text-gray-700">
-                        [cite_start]A Cagayan where every farmer can **earn and live well from the land they work on** — connected through one network of shared knowledge, trust, and opportunity. [cite: 35]
-                    [cite_start]</p> [cite: 36]
+                        A Cagayan where every farmer can <strong>earn and live well from the land they work on</strong> — connected through one network of shared knowledge, trust, and opportunity.
+                    </p>
                 </div>
                 <div>
-                    [cite_start]<h2 class="section-header text-3xl font-extrabold text-[var(--color-primary)] mb-4">💡 Core Values</h2> [cite: 36]
-                    [cite_start]<ul class="space-y-2 text-gray-700"> [cite: 37]
-                        [cite_start]<li><strong class="text-[var(--color-secondary)]">Empowerment:</strong> We teach, train, and trust our partners to grow independently.</li> [cite: 37]
-                        [cite_start]<li><strong class="text-[var(--color-secondary)]">Integrity:</strong> Every deal, every egg, every promise — handled with honesty.</li> [cite: 37]
-                        <li><strong class="text-[var(--color-secondary)]">Community:</strong> We rise together. [cite_start]Farmers, families, and partners are one.</li> [cite: 38]
-                        [cite_start]<li><strong class="text-[var(--color-secondary)]">Innovation:</strong> We embrace technology and sustainable methods that work.</li> [cite: 38]
-                        [cite_start]<li><strong class="text-[var(--color-secondary)]">Stewardship:</strong> We protect our animals, our land, and our people.</li> [cite: 38]
+                    <h2 class="section-header text-3xl font-extrabold text-[var(--color-primary)] mb-4">💡 Core Values</h2>
+                    <ul class="space-y-2 text-gray-700">
+                        <li><strong class="text-[var(--color-secondary)]">Empowerment:</strong> We teach, train, and trust our partners to grow independently.</li>
+                        <li><strong class="text-[var(--color-secondary)]">Integrity:</strong> Every deal, every egg, every promise — handled with honesty.</li>
+                        <li><strong class="text-[var(--color-secondary)]">Community:</strong> We rise together. Farmers, families, and partners are one.</li>
+                        <li><strong class="text-[var(--color-secondary)]">Innovation:</strong> We embrace technology and sustainable methods that work.</li>
+                        <li><strong class="text-[var(--color-secondary)]">Stewardship:</strong> We protect our animals, our land, and our people.</li>
                     </ul>
-                [cite_start]</div> [cite: 39]
+                </div>
             </div>
         </div>
     </section>
@@ -176,59 +243,59 @@
     <section id="what-we-do" class="py-16 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-4xl font-extrabold text-center text-[var(--color-primary)] mb-12">
-                [cite_start]🐣 What We Do: End-to-End Livelihood Solutions [cite: 39]
-            [cite_start]</h2> [cite: 40]
-            
+                🐣 What We Do: End-to-End Livelihood Solutions
+            </h2>
+
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
+
                 <div class="bg-white p-6 rounded-xl card-shadow">
-                    [cite_start]<div class="text-4xl text-[var(--color-secondary)] mb-3">👨‍🏫</div> [cite: 41]
-                    <h3 class="text-xl font-bold text-[var(--color-primary)] mb-2">1. [cite_start]Training & Mentorship</h3> [cite: 42]
+                    <div class="text-4xl text-[var(--color-secondary)] mb-3">👨‍🏫</div>
+                    <h3 class="text-xl font-bold text-[var(--color-primary)] mb-2">1. Training & Mentorship</h3>
                     <p class="text-gray-600">
-                        [cite_start]We conduct hands-on workshops and online programs on poultry raising, disease control, feed formulation, and egg management — designed for both beginners and seasoned farmers. [cite: 43]
+                        We conduct hands-on workshops and online programs on poultry raising, disease control, feed formulation, and egg management — designed for both beginners and seasoned farmers.
                     </p>
                 </div>
 
                 <div class="bg-white p-6 rounded-xl card-shadow">
                     <div class="text-4xl text-[var(--color-secondary)] mb-3">📦</div>
-                    <h3 class="text-xl font-bold text-[var(--color-primary)] mb-2">2. [cite_start]Starter Opportunity Packages</h3> [cite: 44]
+                    <h3 class="text-xl font-bold text-[var(--color-primary)] mb-2">2. Starter Opportunity Packages</h3>
                     <p class="text-gray-600">
-                        [cite_start]Affordable start-up kits include: **Vaccinated chicks** (RIR/Australorp), feeds/vitamins for the first cycle, a step-by-step care guide, and a starter coop layout plan. [cite: 45]
+                        Affordable start-up kits include: <strong>Vaccinated chicks</strong> (RIR/Australorp), feeds/vitamins for the first cycle, a step-by-step care guide, and a starter coop layout plan.
                     </p>
                 </div>
 
                 <div class="bg-white p-6 rounded-xl card-shadow">
                     <div class="text-4xl text-[var(--color-secondary)] mb-3">💊</div>
-                    <h3 class="text-xl font-bold text-[var(--color-primary)] mb-2">3. [cite_start]Access to Supplies & Feeds</h3> [cite: 46]
+                    <h3 class="text-xl font-bold text-[var(--color-primary)] mb-2">3. Access to Supplies & Feeds</h3>
                     <p class="text-gray-600">
-                        [cite_start]Through the Legal Chicks network, farmers enjoy **discounted feeds, vaccines, and pelletized nutrition** produced locally — cutting costs and ensuring quality control. [cite: 47]
+                        Through the Legal Chicks network, farmers enjoy <strong>discounted feeds, vaccines, and pelletized nutrition</strong> produced locally — cutting costs and ensuring quality control.
                     </p>
                 </div>
 
                 <div class="bg-white p-6 rounded-xl card-shadow">
                     <div class="text-4xl text-[var(--color-secondary)] mb-3">🛒</div>
-                    <h3 class="text-xl font-bold text-[var(--color-primary)] mb-2">4. [cite_start]Brand Partnership & Market Access</h3> [cite: 48]
+                    <h3 class="text-xl font-bold text-[var(--color-primary)] mb-2">4. Brand Partnership & Market Access</h3>
                     <p class="text-gray-600">
-                        [cite_start]Members can market under the **Legal Chicks label**, gaining instant brand credibility. [cite: 49]
-                        [cite_start]We also assist with bulk selling, farm-to-market connections, and digital visibility. [cite: 50]
+                        Members can market under the <strong>Legal Chicks label</strong>, gaining instant brand credibility.
+                        We also assist with bulk selling, farm-to-market connections, and digital visibility.
                     </p>
                 </div>
 
                 <div class="bg-white p-6 rounded-xl card-shadow lg:col-span-2">
                     <div class="text-4xl text-[var(--color-secondary)] mb-3">🤝</div>
-                    <h3 class="text-xl font-bold text-[var(--color-primary)] mb-2">5. [cite_start]Community Support & Incentives</h3> [cite: 51]
+                    <h3 class="text-xl font-bold text-[var(--color-primary)] mb-2">5. Community Support & Incentives</h3>
                     <p class="text-gray-600">
-                        [cite_start]A portion of LCEN’s earnings funds a **Community Development Fund**, used to support new starters, provide small grants, or offer youth scholarships. [cite: 52]
-                        [cite_start]**We don’t just grow poultry — we grow people.** [cite: 52]
+                        A portion of LCEN’s earnings funds a <strong>Community Development Fund</strong>, used to support new starters, provide small grants, or offer youth scholarships.
+                        <strong>We don’t just grow poultry — we grow people.</strong>
                     </p>
                 </div>
             </div>
 
             <div class="mt-16 bg-gray-200 p-8 rounded-xl shadow-inner text-center">
-                [cite_start]<h3 class="text-2xl font-bold text-[var(--color-primary)] mb-2">Image Placeholder: LCEN Farmers Workshop</h3> [cite: 53]
-                [cite_start]<p class="text-gray-600 italic">This section will feature a high-quality photo of Cagayan farmers or youth attending a hands-on training session in a coop setting.</p> [cite: 53]
+                <h3 class="text-2xl font-bold text-[var(--color-primary)] mb-2">Image Placeholder: LCEN Farmers Workshop</h3>
+                <p class="text-gray-600 italic">This section will feature a high-quality photo of Cagayan farmers or youth attending a hands-on training session in a coop setting.</p>
                 <div class="h-64 w-full bg-gray-300 mt-4 rounded-lg flex items-center justify-center">
-                    [cite_start]<span class="text-gray-500">Photo of Trainees Here (e.g., A group of farmers around a coop blueprint)</span> [cite: 54]
+                    <span class="text-gray-500">Photo of Trainees Here (e.g., A group of farmers around a coop blueprint)</span>
                 </div>
             </div>
         </div>
@@ -236,122 +303,122 @@
 
     <section id="partners" class="py-16 bg-[var(--color-primary)] text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            [cite_start]<h2 class="text-4xl font-extrabold text-center mb-12">🤝 Our Network Partners & Reach</h2> [cite: 55]
-            
+            <h2 class="text-4xl font-extrabold text-center mb-12">🤝 Our Network Partners & Reach</h2>
+
             <div class="grid lg:grid-cols-2 gap-10 items-start">
-                
-                <div>
-                    [cite_start]<h3 class="text-2xl font-bold text-[var(--color-accent)] mb-4">Active Collaborations</h3> [cite: 56]
-                    <p class="text-lg font-light mb-6">
-                        [cite_start]LCEN actively collaborates with key organizations to ensure farmers have access to funding, reliable markets, and essential government resources. [cite: 57]
-                    </p>
-                    <ul class="space-y-3 bg-white text-[var(--color-text-dark)] p-6 rounded-xl shadow-lg">
-                        [cite_start]<li class="flex items-start"><span class="text-[var(--color-secondary)] text-xl mr-3">✓</span>Local Government Units (LGUs) in Cagayan towns</li> [cite: 57]
-                        [cite_start]<li class="flex items-start"><span class="text-[var(--color-secondary)] text-xl mr-3">✓</span>Department of Agriculture (DA) and DTI Livelihood Programs</li> [cite: 57]
-                        [cite_start]<li class="flex items-start"><span class="text-[var(--color-secondary)] text-xl mr-3">✓</span>Private agri-supply chains and training institutions</li> [cite: 58]
-                        [cite_start]<li class="flex items-start"><span class="text-[var(--color-secondary)] text-xl mr-3">✓</span>Community cooperatives and youth groups</li> [cite: 58]
-                    </ul>
-                [cite_start]</div> [cite: 59]
 
                 <div>
-                    [cite_start]<h3 class="text-2xl font-bold text-[var(--color-accent)] mb-4">Our Growing Reach</h3> [cite: 59]
+                    <h3 class="text-2xl font-bold text-[var(--color-accent)] mb-4">Active Collaborations</h3>
                     <p class="text-lg font-light mb-6">
-                        [cite_start]We are rapidly expanding across Cagayan Valley, organizing local farmers into "Farmer Clusters" for efficient mentoring and resource sharing. [cite: 60]
-                    [cite_start]</p> [cite: 61]
+                        LCEN actively collaborates with key organizations to ensure farmers have access to funding, reliable markets, and essential government resources.
+                    </p>
+                    <ul class="space-y-3 bg-white text-[var(--color-text-dark)] p-6 rounded-xl shadow-lg">
+                        <li class="flex items-start"><span class="text-[var(--color-secondary)] text-xl mr-3">✓</span>Local Government Units (LGUs) in Cagayan towns</li>
+                        <li class="flex items-start"><span class="text-[var(--color-secondary)] text-xl mr-3">✓</span>Department of Agriculture (DA) and DTI Livelihood Programs</li>
+                        <li class="flex items-start"><span class="text-[var(--color-secondary)] text-xl mr-3">✓</span>Private agri-supply chains and training institutions</li>
+                        <li class="flex items-start"><span class="text-[var(--color-secondary)] text-xl mr-3">✓</span>Community cooperatives and youth groups</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-bold text-[var(--color-accent)] mb-4">Our Growing Reach</h3>
+                    <p class="text-lg font-light mb-6">
+                        We are rapidly expanding across Cagayan Valley, organizing local farmers into "Farmer Clusters" for efficient mentoring and resource sharing.
+                    </p>
                     <div class="bg-white text-[var(--color-text-dark)] p-6 rounded-xl shadow-lg">
-                        [cite_start]<h4 class="text-xl font-bold text-[var(--color-primary)] mb-3">Currently Active In:</h4> [cite: 61]
+                        <h4 class="text-xl font-bold text-[var(--color-primary)] mb-3">Currently Active In:</h4>
                         <ul class="grid grid-cols-2 gap-y-2">
-                            [cite_start]<li class="flex items-center"><span class="text-[var(--color-secondary)] mr-2">📍</span>Tuguegarao City</li> [cite: 62]
-                            [cite_start]<li class="flex items-center"><span class="text-[var(--color-secondary)] mr-2">📍</span>Solana</li> [cite: 62]
-                            [cite_start]<li class="flex items-center"><span class="text-[var(--color-secondary)] mr-2">📍</span>Enrile</li> [cite: 62]
-                            [cite_start]<li class="flex items-center"><span class="text-[var(--color-secondary)] mr-2">📍</span>Peñablanca</li> [cite: 63]
+                            <li class="flex items-center"><span class="text-[var(--color-secondary)] mr-2">📍</span>Tuguegarao City</li>
+                            <li class="flex items-center"><span class="text-[var(--color-secondary)] mr-2">📍</span>Solana</li>
+                            <li class="flex items-center"><span class="text-[var(--color-secondary)] mr-2">📍</span>Enrile</li>
+                            <li class="flex items-center"><span class="text-[var(--color-secondary)] mr-2">📍</span>Peñablanca</li>
                         </ul>
                     </div>
-                    [cite_start]<div class="mt-4 p-4 bg-gray-200 rounded-xl text-center"> [cite: 64]
-                        [cite_start]<p class="text-sm text-gray-700">Map Placeholder showing LCEN clusters in Cagayan Valley</p> [cite: 64]
+                    <div class="mt-4 p-4 bg-gray-200 rounded-xl text-center">
+                        <p class="text-sm text-gray-700">Map Placeholder showing LCEN clusters in Cagayan Valley</p>
                         <div class="h-32 w-full bg-gray-300 mt-2 rounded-lg flex items-center justify-center">
                             <span class="text-gray-500">Simplified Map/Infographic Here</span>
-                        [cite_start]</div> [cite: 65]
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    [cite_start]<section id="model" class="py-16 bg-gray-50"> [cite: 66]
+    <section id="model" class="py-16 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-4xl font-extrabold text-center text-[var(--color-primary)] mb-12">
                 🧭 Business Model & Impact
             </h2>
 
             <div class="grid lg:grid-cols-2 gap-10">
-                
-                [cite_start]<div class="bg-white p-6 rounded-xl card-shadow"> [cite: 67]
-                    [cite_start]<h3 class="text-2xl font-bold text-[var(--color-secondary)] mb-4">LCEN Hybrid Structure</h3> [cite: 67]
+
+                <div class="bg-white p-6 rounded-xl card-shadow">
+                    <h3 class="text-2xl font-bold text-[var(--color-secondary)] mb-4">LCEN Hybrid Structure</h3>
                     <div class="overflow-x-auto">
-                        [cite_start]<table class="min-w-full divide-y divide-gray-200"> [cite: 68]
+                        <table class="min-w-full divide-y divide-gray-200">
                             <thead>
                                 <tr class="bg-gray-50">
-                                    [cite_start]<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Element</th> [cite: 69]
-                                    [cite_start]<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th> [cite: 69]
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Element</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
                                 </tr>
-                            [cite_start]</thead> [cite: 70]
-                            [cite_start]<tbody class="divide-y divide-gray-200"> [cite: 70]
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
                                 <tr class="hover:bg-gray-50">
-                                    [cite_start]<td class="px-6 py-4 whitespace-nowrap font-semibold">Enterprise Core (Legal Chicks)</td> [cite: 71]
-                                    [cite_start]<td class="px-6 py-4">Manages training, branding, chick supply, and feed production.</td> [cite: 71]
-                                </tr>
-                                [cite_start]<tr class="hover:bg-gray-50"> [cite: 72]
-                                    [cite_start]<td class="px-6 py-4 whitespace-nowrap font-semibold">Empowerment Network (LCEN)</td> [cite: 72]
-                                    [cite_start]<td class="px-6 py-4">Community arm that trains, supports, and monitors local poultry farmers.</td> [cite: 73]
+                                    <td class="px-6 py-4 whitespace-nowrap font-semibold">Enterprise Core (Legal Chicks)</td>
+                                    <td class="px-6 py-4">Manages training, branding, chick supply, and feed production.</td>
                                 </tr>
                                 <tr class="hover:bg-gray-50">
-                                    [cite_start]<td class="px-6 py-4 whitespace-nowrap font-semibold">Revenue Streams</td> [cite: 74]
-                                    [cite_start]<td class="px-6 py-4">Starter packages, feed sales, training fees, marketing commissions, and bulk partnerships.</td> [cite: 74]
-                                [cite_start]</tr> [cite: 75]
+                                    <td class="px-6 py-4 whitespace-nowrap font-semibold">Empowerment Network (LCEN)</td>
+                                    <td class="px-6 py-4">Community arm that trains, supports, and monitors local poultry farmers.</td>
+                                </tr>
                                 <tr class="hover:bg-gray-50">
-                                    [cite_start]<td class="px-6 py-4 whitespace-nowrap font-semibold">Impact Flow</td> [cite: 75]
-                                    [cite_start]<td class="px-6 py-4">Part of profits reinvested into the Community Development Fund.</td> [cite: 76]
+                                    <td class="px-6 py-4 whitespace-nowrap font-semibold">Revenue Streams</td>
+                                    <td class="px-6 py-4">Starter packages, feed sales, training fees, marketing commissions, and bulk partnerships.</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap font-semibold">Impact Flow</td>
+                                    <td class="px-6 py-4">Part of profits reinvested into the Community Development Fund.</td>
                                 </tr>
                             </tbody>
-                        [cite_start]</table> [cite: 77]
+                        </table>
                     </div>
-                    [cite_start]<p class="mt-4 text-sm text-gray-500">This hybrid structure allows LCEN to stay financially self-sustaining while fulfilling its mission to uplift the rural community.</p> [cite: 77]
+                    <p class="mt-4 text-sm text-gray-500">This hybrid structure allows LCEN to stay financially self-sustaining while fulfilling its mission to uplift the rural community.</p>
                 </div>
 
-                [cite_start]<div class="bg-white p-6 rounded-xl card-shadow"> [cite: 78]
-                    [cite_start]<h3 class="text-2xl font-bold text-[var(--color-secondary)] mb-4">📈 Our Impact Goals (2025–2026)</h3> [cite: 78]
+                <div class="bg-white p-6 rounded-xl card-shadow">
+                    <h3 class="text-2xl font-bold text-[var(--color-secondary)] mb-4">📈 Our Impact Goals (2025–2026)</h3>
                     <ul class="space-y-3 text-lg">
-                        [cite_start]<li class="flex items-start"> [cite: 79]
-                            <span class="text-green-600 text-2xl mr-3">✔</span>
-                            [cite_start]<p>Train and mentor **300+ Cagayan farmers**</p> [cite: 79]
-                        </li>
-                        [cite_start]<li class="flex items-start"> [cite: 80]
-                            <span class="text-green-600 text-2xl mr-3">✔</span>
-                            [cite_start]<p>Establish **10+ local clusters** under the LCEN banner</p> [cite: 80]
-                        [cite_start]</li> [cite: 81]
                         <li class="flex items-start">
-                            [cite_start]<span class="text-green-600 text-2xl mr-3">✔</span> [cite: 81]
-                            [cite_start]<p>Create **500+ new livelihood opportunities**</p> [cite: 81]
-                        [cite_start]</li> [cite: 82]
-                        <li class="flex items-start">
-                            [cite_start]<span class="text-green-600 text-2xl mr-3">✔</span> [cite: 82]
-                            [cite_start]<p>Supply and distribute **20,000+ healthy layers**</p> [cite: 83]
+                            <span class="text-green-600 text-2xl mr-3">✔</span>
+                            <p>Train and mentor <strong>300+ Cagayan farmers</strong></p>
                         </li>
                         <li class="flex items-start">
-                            [cite_start]<span class="text-green-600 text-2xl mr-3">✔</span> [cite: 83]
-                            [cite_start]<p>Launch the **Legal Chicks Farmer Certification Program**</p> [cite: 84]
+                            <span class="text-green-600 text-2xl mr-3">✔</span>
+                            <p>Establish <strong>10+ local clusters</strong> under the LCEN banner</p>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-600 text-2xl mr-3">✔</span>
+                            <p>Create <strong>500+ new livelihood opportunities</strong></p>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-600 text-2xl mr-3">✔</span>
+                            <p>Supply and distribute <strong>20,000+ healthy layers</strong></p>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-600 text-2xl mr-3">✔</span>
+                            <p>Launch the <strong>Legal Chicks Farmer Certification Program</strong></p>
                         </li>
                     </ul>
                 </div>
 
-                [cite_start]<div class="lg:col-span-2 mt-8 p-6 bg-[var(--color-secondary)] text-white rounded-xl shadow-2xl"> [cite: 85]
-                    [cite_start]<h3 class="text-3xl font-bold mb-3">🌾 Why LCEN Matters</h3> [cite: 85]
+                <div class="lg:col-span-2 mt-8 p-6 bg-[var(--color-secondary)] text-white rounded-xl shadow-2xl">
+                    <h3 class="text-3xl font-bold mb-3">🌾 Why LCEN Matters</h3>
                     <p class="text-xl font-light leading-relaxed">
-                        [cite_start]In a time when farming families are struggling against low prices, rising costs, and climate challenges — LCEN stands as a practical lifeline. [cite: 86]
-                        We don’t just give aid; we give **ability**. [cite_start]We don’t just provide jobs; we build **ownership**. [cite: 87]
-                        [cite_start]And we don’t just raise chickens; we raise a generation of local **agri-entrepreneurs**. [cite: 88]
-                    [cite_start]</p> [cite: 89]
+                        In a time when farming families are struggling against low prices, rising costs, and climate challenges — LCEN stands as a practical lifeline.
+                        We don’t just give aid; we give <strong>ability</strong>. We don’t just provide jobs; we build <strong>ownership</strong>.
+                        And we don’t just raise chickens; we raise a generation of local <strong>agri-entrepreneurs</strong>.
+                    </p>
                 </div>
             </div>
         </div>
@@ -359,183 +426,261 @@
 
     <section id="connect" class="py-16 bg-[var(--color-primary)] text-white text-center">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            [cite_start]<h2 class="text-4xl sm:text-5xl font-extrabold mb-6">🕊️ Our Promise & Commitment</h2> [cite: 89]
+            <h2 class="text-4xl sm:text-5xl font-extrabold mb-6">🕊️ Our Promise & Commitment</h2>
             <p class="mt-4 text-xl font-light mb-8 italic">
-                To every Cagayano who joins us: **You will not start alone. You will not grow alone. [cite_start]You will never stand alone.** [cite: 90]
-            [cite_start]</p> [cite: 91]
-            
+                To every Cagayano who joins us: <strong>You will not start alone. You will not grow alone. You will never stand alone.</strong>
+            </p>
+
             <a href="mailto:info@legalchicks.com" class="inline-block bg-[var(--color-accent)] text-[var(--color-primary)] py-3 px-10 rounded-xl text-xl font-bold shadow-xl transform transition hover:scale-105 hover:bg-white">
                 Inquire About The Opportunity Package
             </a>
 
-            [cite_start]<div class="mt-12 pt-8 border-t border-white border-opacity-30"> [cite: 92]
-                [cite_start]<h3 class="text-3xl font-bold mb-6">📞 Connect With Us</h3> [cite: 92]
+            <div class="mt-12 pt-8 border-t border-white border-opacity-30">
+                <h3 class="text-3xl font-bold mb-6">📞 Connect With Us</h3>
                 <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-8 text-lg">
                     <div class="flex items-center justify-center">
-                        [cite_start]<span class="text-2xl mr-2">📍</span> [cite: 93]
-                        [cite_start]<p>Head Office: **Solana, Cagayan Valley**</p> [cite: 93]
+                        <span class="text-2xl mr-2">📍</span>
+                        <p>Head Office: <strong>Solana, Cagayan Valley</strong></p>
                     </div>
                     <div class="flex items-center justify-center">
-                        [cite_start]<span class="text-2xl mr-2">📧</span> [cite: 94]
-                        [cite_start]<p><a href="mailto:info@legalchicks.com" class="underline hover:text-gray-200">Email: info@legalchicks.com</a></p> [cite: 94]
+                        <span class="text-2xl mr-2">📧</span>
+                        <p><a href="mailto:info@legalchicks.com" class="underline hover:text-gray-200">Email: info@legalchicks.com</a></p>
                     </div>
                     <div class="flex items-center justify-center">
                         <span class="text-2xl mr-2">📘</span>
-                        [cite_start]<p><a href="https://facebook.com/LegalChicksEmpowermentNetwork" target="_blank" class="underline hover:text-gray-200">Facebook Page</a></p> [cite: 95]
+                        <p><a href="https://facebook.com/LegalChicksEmpowermentNetwork" target="_blank" class="underline hover:text-gray-200" rel="noopener noreferrer">Facebook Page</a></p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    [cite_start]<footer class="bg-gray-800 text-white py-6"> [cite: 96]
+    <footer class="bg-gray-800 text-white py-6">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
-            <p>&copy; 2025 Legal Chicks Empowerment Network (LCEN). [cite_start]All Rights Reserved.</p> [cite: 97]
-            <p class="mt-1">Livelihood and Agribusiness Movement | [cite_start]Built with a Hybrid Model.</p> [cite: 98]
+            <p>&copy; 2025 Legal Chicks Empowerment Network (LCEN). All Rights Reserved.</p>
+            <p class="mt-1">Livelihood and Agribusiness Movement | Built with a Hybrid Model.</p>
         </div>
     </footer>
 
     <script>
-      // --- CHATBOT SCRIPT ---
-      [cite_start]const toggleBtn = document.getElementById("chatbot-toggle"); [cite: 99]
-      [cite_start]const panel = document.getElementById("chatbot-panel"); [cite: 99]
-      [cite_start]const messagesEl = document.getElementById("chatbot-messages"); [cite: 99]
-      [cite_start]const inputEl = document.getElementById("chatbot-text"); [cite: 99]
-      [cite_start]const sendBtn = document.getElementById("chatbot-send"); [cite: 99]
+      // --- CHATBOT SCRIPT (Improved: lazy-load models, accessibility, error handling) ---
+      const toggleBtn = document.getElementById("chatbot-toggle");
+      const panel = document.getElementById("chatbot-panel");
+      const messagesEl = document.getElementById("chatbot-messages");
+      const inputEl = document.getElementById("chatbot-text");
+      const sendBtn = document.getElementById("chatbot-send");
 
-      [cite_start]let generator, embedder; [cite: 100]
-      [cite_start]let sections = [], sectionEmbeddings = []; [cite: 100]
+      let generator = null, embedder = null;
+      let modelsLoaded = false;
+      let loadingModels = false;
+      let sections = [], sectionEmbeddings = [];
 
-      [cite_start]toggleBtn.addEventListener("click", () => { [cite: 100]
-        panel.style.display = panel.style.display === "flex" ? [cite_start]"none" : "flex"; [cite: 100]
+      // Accessibility helpers
+      function openPanel() {
+        panel.style.display = "flex";
+        panel.setAttribute("aria-hidden", "false");
+        toggleBtn.setAttribute("aria-expanded", "true");
+        inputEl.focus();
+      }
+      function closePanel() {
+        panel.style.display = "none";
+        panel.setAttribute("aria-hidden", "true");
+        toggleBtn.setAttribute("aria-expanded", "false");
+        toggleBtn.focus();
+      }
+
+      // Toggle Chatbot Panel (lazy-load models on first open)
+      toggleBtn.addEventListener("click", async () => {
+        const isOpen = panel.style.display === "flex";
+        if (isOpen) {
+          closePanel();
+          return;
+        }
+        openPanel();
+
+        if (!modelsLoaded && !loadingModels) {
+          await initChat(); // lazy initialize models and index page
+        }
       });
 
-      [cite_start]function addMessage(role, text) { [cite: 101]
-        [cite_start]const msg = document.createElement("div"); [cite: 101]
-        [cite_start]msg.className = "msg " + role; [cite: 101]
-        [cite_start]const bubble = document.createElement("div"); [cite: 102]
-        [cite_start]bubble.className = "bubble"; [cite: 102]
-        [cite_start]bubble.textContent = text; [cite: 102]
-        [cite_start]msg.appendChild(bubble); [cite: 102]
-        [cite_start]messagesEl.appendChild(msg); [cite: 102]
-        [cite_start]messagesEl.scrollTop = messagesEl.scrollHeight; [cite: 102]
-      [cite_start]} [cite: 103]
-
-      [cite_start]function meanPool(matrix) { [cite: 103]
-        [cite_start]return matrix[0].map((_, i) => matrix.reduce((sum, row) => sum + row[i], 0) / matrix.length); [cite: 103]
-      [cite_start]} [cite: 104]
-
-      [cite_start]function cosineSim(a, b) { [cite: 104]
-        [cite_start]let dot = 0, normA = 0, normB = 0; [cite: 104]
-        [cite_start]for (let i = 0; i < a.length; i++) { [cite: 105]
-          [cite_start]dot += a[i] * b[i]; [cite: 105]
-          [cite_start]normA += a[i] * a[i]; [cite: 106]
-          [cite_start]normB += b[i] * b[i]; [cite: 106]
+      // Close on Escape key and simple focus handling
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && panel.style.display === "flex") {
+          closePanel();
         }
-        [cite_start]return dot / (Math.sqrt(normA) * Math.sqrt(normB)); [cite: 107]
+      });
+
+      // Utility function to add a message to the chat UI
+      function addMessage(role, text) {
+        const msg = document.createElement("div");
+        msg.className = "msg " + role;
+        const bubble = document.createElement("div");
+        bubble.className = "bubble";
+        bubble.textContent = text;
+        msg.appendChild(bubble);
+        messagesEl.appendChild(msg);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
       }
 
-      [cite_start]async function semanticSearch(query) { [cite: 107]
-        [cite_start]const emb = await embedder(query); [cite: 107]
-        [cite_start]const queryVec = meanPool(emb[0]); [cite: 107]
-        [cite_start]let best = { score: -1, section: null }; [cite: 108]
-        for (let i = 0; i < sections.length; i++) {
-          [cite_start]const score = cosineSim(queryVec, sectionEmbeddings[i]); [cite: 108]
-          [cite_start]if (score > best.score) { [cite: 109]
-            [cite_start]best = { score, section: sections[i] }; [cite: 109]
-          [cite_start]} [cite: 110]
+      // Embedding utility functions (more robust)
+      function meanPool(matrix) {
+        if (!Array.isArray(matrix) || matrix.length === 0) return [];
+        const dim = matrix[0].length;
+        const result = new Array(dim).fill(0);
+        for (let r = 0; r < matrix.length; r++) {
+          for (let i = 0; i < dim; i++) result[i] += matrix[r][i];
         }
-        [cite_start]return best.score >= 0.4 ? best.section : null; [cite: 110]
-      [cite_start]} [cite: 111]
+        return result.map(v => v / matrix.length);
+      }
+      function cosineSim(a, b) {
+        if (!a || !b || a.length !== b.length || a.length === 0) return -1;
+        let dot = 0, normA = 0, normB = 0;
+        for (let i = 0; i < a.length; i++) {
+          dot += a[i] * b[i];
+          normA += a[i] * a[i];
+          normB += b[i] * b[i];
+        }
+        const denom = Math.sqrt(normA) * Math.sqrt(normB);
+        return denom === 0 ? -1 : dot / denom;
+      }
 
+      // RAG Logic: Search page content for relevant answer
+      async function semanticSearch(query) {
+        if (!embedder || sections.length === 0) return null;
+        try {
+          const emb = await embedder(query);
+          const queryVec = meanPool(emb[0]);
+          let best = { score: -1, section: null };
+          for (let i = 0; i < sections.length; i++) {
+            const score = cosineSim(queryVec, sectionEmbeddings[i]);
+            if (score > best.score) {
+              best = { score, section: sections[i] };
+            }
+          }
+          return best.score >= 0.4 ? best.section : null;
+        } catch (err) {
+          console.error("semanticSearch error:", err);
+          return null;
+        }
+      }
+
+      // Main chat message handler
       async function sendMessage() {
-        [cite_start]const text = inputEl.value.trim(); [cite: 111]
-        [cite_start]if (!text) return; [cite: 111]
-        [cite_start]addMessage("user", text); [cite: 111]
-        [cite_start]inputEl.value = ""; [cite: 112]
-        [cite_start]sendBtn.disabled = true; [cite: 112]
+        const text = inputEl.value.trim();
+        if (!text) return;
+        addMessage("user", text);
+        inputEl.value = "";
+        sendBtn.disabled = true;
 
-        [cite_start]const section = await semanticSearch(text); [cite: 112]
-        [cite_start]if (section) { [cite: 113]
-          [cite_start]addMessage("bot", "I found this on the page: " + section); [cite: 113]
-          [cite_start]sendBtn.disabled = false; [cite: 113]
-          [cite_start]return; [cite: 113]
+        // 1. Perform RAG search on the page content
+        const section = await semanticSearch(text);
+
+        if (section) {
+          // If relevant content found, return it as a direct answer
+          addMessage("bot", "I found this on the LCEN page: " + section);
+          sendBtn.disabled = false;
+          return;
         }
 
-        [cite_start]addMessage("bot", "Thinking..."); [cite: 114]
-        [cite_start]const output = await generator(text, { max_new_tokens: 60 }); [cite: 114]
-        [cite_start]messagesEl.lastChild.remove(); [cite: 114]
-        [cite_start]addMessage("bot", output[0].generated_text.replace(text, "").trim()); [cite: 114]
-        [cite_start]sendBtn.disabled = false; [cite: 115]
+        // 2. If RAG fails, fall back to the small text-generation model (with error handling)
+        addMessage("bot", "Thinking...");
+        try {
+          if (!generator) throw new Error("Text generator not available.");
+          const output = await generator(text, { max_new_tokens: 60 });
+          // Remove "Thinking..." message safely
+          if (messagesEl.lastChild && messagesEl.lastChild.querySelector('.bubble').textContent === "Thinking...") {
+            messagesEl.removeChild(messagesEl.lastChild);
+          }
+          const generated = (output && output[0] && (output[0].generated_text || output[0].text)) ? (output[0].generated_text || output[0].text) : "Sorry, I couldn't generate a response.";
+          // Trim echoed prompt if present
+          const answer = generated.replace(text, "").trim();
+          addMessage("bot", answer || generated);
+        } catch (err) {
+          console.error("generation error:", err);
+          if (messagesEl.lastChild && messagesEl.lastChild.querySelector('.bubble').textContent === "Thinking...") {
+            messagesEl.removeChild(messagesEl.lastChild);
+          }
+          addMessage("bot", "Sorry — I'm having trouble generating an answer right now.");
+        } finally {
+          sendBtn.disabled = false;
+        }
       }
 
-      // --- FIXED: Added click listener for the send button ---
+      // Event listeners for sending message
       sendBtn.addEventListener("click", sendMessage);
-
-      [cite_start]inputEl.addEventListener("keydown", e => { [cite: 115]
-        [cite_start]if (e.key === "Enter" && !e.shiftKey) { [cite: 115]
-          [cite_start]e.preventDefault(); [cite: 115]
+      inputEl.addEventListener("keydown", e => {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
           sendMessage();
         }
       });
 
-      [cite_start]async function init() { [cite: 116]
-        [cite_start]addMessage("bot", "⏳ Loading models and reading the site..."); [cite: 116]
-        [cite_start]embedder = await window.transformers.pipeline("feature-extraction", "Xenova/all-MiniLM-L4-v2"); [cite: 116]
-        [cite_start]generator = await window.transformers.pipeline("text-generation", "Xenova/distilgpt2"); [cite: 117]
+      // Initialization (lazy): Load models and index page content when the user opens the chat
+      async function initChat() {
+        loadingModels = true;
+        addMessage("bot", "⏳ Loading AI models and reading the site content...");
 
-        const nodes = [
-          [cite_start]...document.querySelectorAll("h2"), [cite: 117]
-          [cite_start]...document.querySelectorAll(".section-header"), [cite: 118]
-          [cite_start]...document.querySelectorAll(".card-shadow p") [cite: 118]
-        ];
-        [cite_start]sections = nodes.map(n => n.textContent.trim()).filter(t => t.length > 0); [cite: 118]
+        try {
+          // Load the two required models for RAG: Embedder and Generator
+          // These are loaded lazily to avoid blocking page load / consuming bandwidth until needed.
+          embedder = await window.transformers.pipeline("feature-extraction", "Xenova/all-MiniLM-L4-v2");
+          generator = await window.transformers.pipeline("text-generation", "Xenova/distilgpt2");
 
-        for (let sec of sections) {
-          [cite_start]const emb = await embedder(sec); [cite: 118]
-          [cite_start]sectionEmbeddings.push(meanPool(emb[0])); [cite: 119]
+          // Scrape relevant text from the HTML structure (limited selectors)
+          const nodes = [
+            ...document.querySelectorAll("h2"),
+            ...document.querySelectorAll(".section-header"),
+            ...document.querySelectorAll(".card-shadow p"),
+            ...document.querySelectorAll(".hero-background p")
+          ];
+          sections = nodes.map(n => n.textContent.trim()).filter(t => t.length > 0);
+
+          // Create embeddings for all scraped sections
+          sectionEmbeddings = [];
+          for (let sec of sections) {
+            try {
+              const emb = await embedder(sec);
+              sectionEmbeddings.push(meanPool(emb[0]));
+            } catch (err) {
+              // if an embedding for one section fails, skip it and continue
+              console.warn("embedding failed for section:", sec, err);
+              sectionEmbeddings.push([]);
+            }
+          }
+
+          addMessage("bot", "✅ AI is Ready! Ask me anything about LCEN’s mission, programs, or opportunities.");
+          addMessage("bot", "💡 You can try asking:");
+          addMessage("bot", "• What is included in the Starter Opportunity Packages?");
+          addMessage("bot", "• What are LCEN's core values?");
+          addMessage("bot", "• Where is the head office located?");
+          modelsLoaded = true;
+        } catch (err) {
+          console.error("initChat error:", err);
+          addMessage("bot", "⚠️ Failed to load AI models. Please check your connection and try again.");
+        } finally {
+          loadingModels = false;
         }
-
-        [cite_start]addMessage("bot", "✅ Ready! Ask me anything about LCEN’s mission, programs, or opportunities."); [cite: 120]
-        
-        // --- FIXED: Moved these messages inside the function ---
-        addMessage("bot", "💡 You can try asking:");
-        addMessage("bot", "• What’s included in the starter package?");
-        addMessage("bot", "• What areas do you serve?");
-        addMessage("bot", "• What is LCEN’s business model?");
       }
 
-      // --- FIXED: Correctly call the init function ---
-      init();
+      // --- MOBILE MENU SCRIPT ---
+      const menuButton = document.getElementById('menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
 
-      // Preload models in background
-      [cite_start]window.addEventListener("load", async () => { [cite: 121]
-        try {
-          [cite_start]await window.transformers.pipeline("feature-extraction", "Xenova/all-MiniLM-L4-v2"); [cite: 121]
-          [cite_start]await window.transformers.pipeline("text-generation", "Xenova/distilgpt2"); [cite: 121]
-          [cite_start]console.log("✅ Models preloaded"); [cite: 121]
-          [cite_start]toggleBtn.textContent = "💬 Chat (Ready)"; [cite: 121]
-        } catch (e) {
-          [cite_start]console.warn("⚠️ Model preload failed", e); [cite: 121]
-        }
+      menuButton.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+          const expanded = !mobileMenu.classList.contains('hidden');
+          menuButton.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+          mobileMenu.setAttribute('aria-hidden', expanded ? 'false' : 'true');
       });
 
-      // --- MOBILE MENU SCRIPT ---
-      [cite_start]const menuButton = document.getElementById('menu-button'); [cite: 122]
-      [cite_start]const mobileMenu = document.getElementById('mobile-menu'); [cite: 122]
-      
-      [cite_start]menuButton.addEventListener('click', () => { [cite: 123]
-          [cite_start]mobileMenu.classList.toggle('hidden'); [cite: 123]
-          [cite_start]menuButton.setAttribute('aria-expanded', mobileMenu.classList.contains('hidden') ? 'false' : 'true'); [cite: 123]
-      [cite_start]}); [cite: 123]
-      
       // Close mobile menu when a link is clicked
-      [cite_start]mobileMenu.querySelectorAll('a').forEach(link => { [cite: 124]
-          [cite_start]link.addEventListener('click', () => { [cite: 124]
-              [cite_start]mobileMenu.classList.add('hidden'); [cite: 124]
-              [cite_start]menuButton.setAttribute('aria-expanded', 'false'); [cite: 124]
+      mobileMenu.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+              mobileMenu.classList.add('hidden');
+              menuButton.setAttribute('aria-expanded', 'false');
+              mobileMenu.setAttribute('aria-hidden', 'true');
           });
-      [cite_start]}); [cite: 124]
-    [cite_start]</script> [cite: 125]
+      });
+    </script>
 </body>
 </html>
