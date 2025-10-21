@@ -18,54 +18,33 @@
             --color-text-light: #F9FAFB;
         }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--color-text-light);
-            color: var(--color-text-dark);
-        }
-        .header-bg {
-            background-color: var(--color-primary);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-        }
-        .btn-primary {
-            background-color: var(--color-secondary);
-            color: var(--color-text-light);
-            transition: background-color 0.3s, transform 0.3s;
-        }
-        .btn-primary:hover {
-            background-color: var(--color-accent);
-            color: var(--color-text-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        .section-header {
-            border-left: 6px solid var(--color-secondary);
-            padding-left: 1.25rem;
-        }
-        .card-shadow {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
-        }
-        .card-shadow:hover {
-            transform: translateY(-5px);
-        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--color-text-light); color: var(--color-text-dark); }
+    .header-bg { background-color: var(--color-primary); }
+    .btn-primary { background-color: var(--color-secondary); color: var(--color-text-light); }
+    .btn-primary:hover { background-color: var(--color-accent); color: var(--color-text-dark); }
+    .section-header { border-left: 6px solid var(--color-secondary); padding-left: 1.25rem; }
+    .card-shadow { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); transition: transform 0.3s; }
+    .card-shadow:hover { transform: translateY(-5px); }
+    .logo-img { max-height: 55px; width: auto; }
+    .hero-background {
+      background-image: linear-gradient(rgba(139,84,47,0.5), rgba(139,84,47,0.5)), url('uploaded:change the _POULTRY .jpg');
+      background-size: cover; background-position: center; background-attachment: fixed;
+    }
+    /* Chatbot styles */
+    #chatbot-toggle { position: fixed; bottom: 20px; right: 20px; background: var(--color-secondary); color: white; padding: 12px 16px; border-radius: 9999px; cursor: pointer; z-index: 50; }
+    #chatbot-panel { position: fixed; bottom: 80px; right: 20px; width: 350px; max-height: 500px; background: white; border: 2px solid var(--color-primary); border-radius: 12px; display: none; flex-direction: column; z-index: 50; }
+    #chatbot-messages { flex: 1; overflow-y: auto; padding: 10px; font-size: 0.9rem; }
+    .msg { margin-bottom: 10px; }
+    .msg.user { text-align: right; }
+    .msg.bot { text-align: left; }
+    .bubble { display: inline-block; padding: 8px 12px; border-radius: 12px; max-width: 80%; }
+    .user .bubble { background: #f0faf4; border: 1px solid #c6f6d5; }
+    .bot .bubble { background: #fff8f2; border: 1px solid #fbd38d; }
+    #chatbot-input { display: flex; border-top: 1px solid #ddd; }
+    #chatbot-input textarea { flex: 1; border: none; padding: 8px; resize: none; }
+    #chatbot-input button { background: var(--color-primary); color: white; padding: 8px 12px; border: none; }
+  </style>
 
-        /* Responsive Logo Sizing (assuming a simple inline logo or placeholder) */
-        .logo-img {
-            max-height: 55px;
-            width: auto;
-        }
-
-        /* NEW: Hero Background with 50% Opacity Overlay */
-        .hero-background {
-            /* Linear gradient adds a 50% opaque layer of the primary color over the image */
-            background-image: linear-gradient(rgba(139, 84, 47, 0.5), rgba(139, 84, 47, 0.5)), url('uploaded:change the _POULTRY .jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            position: relative;
-        }
-    </style>
 </head>
 <body class="antialiased">
 
@@ -397,7 +376,122 @@
         </div>
     </footer>
 
+<div id="chatbot-toggle">💬 Chat</div>
+  <div id="chatbot-panel" class="flex">
+    <div id="chatbot-messages"></div>
+    <div id="chatbot-input">
+      <textarea id="chatbot-text" rows="2" placeholder="Ask me about LCEN..."></textarea>
+      <button id="chatbot-send">Send</button>
+    </div>
+  </div>
+
+
+
     <script>
+  <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers"></script>
+  <script>
+    const toggleBtn = document.getElementById("chatbot-toggle");
+    const panel = document.getElementById("chatbot-panel");
+    const messagesEl = document.getElementById("chatbot-messages");
+    const inputEl = document.getElementById("chatbot-text");
+    const sendBtn = document.getElementById("chatbot-send");
+
+    let generator, embedder;
+    let sections = [], sectionEmbeddings = [];
+
+    toggleBtn.addEventListener("click", () => {
+      panel.style.display = panel.style.display === "flex" ? "none" : "flex";
+    });
+
+    function addMessage(role, text) {
+      const msg = document.createElement("div");
+      msg.className = "msg " + role;
+      const bubble = document.createElement("div");
+      bubble.className = "bubble";
+      bubble.textContent = text;
+      msg.appendChild(bubble);
+      messagesEl.appendChild(msg);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    async function init() {
+      addMessage("bot", "Loading models and reading the site...");
+      embedder = await window.transformers.pipeline("feature-extraction", "Xenova/all-MiniLM-L6-v2");
+      generator = await window.transformers.pipeline("text-generation", "Xenova/distilgpt2");
+
+      // Extract sections from the current page
+      const nodes = [...document.querySelectorAll("h2, p, li")];
+      sections = nodes.map(n => n.textContent.trim()).filter(t => t.length > 0);
+
+      for (let sec of sections) {
+        const emb = await embedder(sec);
+        sectionEmbeddings.push(meanPool(emb[0]));
+      }
+
+      addMessage("bot", "Hello! I’ve read this page. Ask me about LCEN’s mission, programs, or opportunities.");
+    }
+
+    function meanPool(matrix) {
+      return matrix[0].map((_, i) => matrix.reduce((sum, row) => sum + row[i], 0) / matrix.length);
+    }
+
+    function cosineSim(a, b) {
+      let dot = 0, normA = 0, normB = 0;
+      for (let i = 0; i < a.length; i++) {
+        dot += a[i] * b[i];
+        normA += a[i] * a[i];
+        normB += b[i] * b[i];
+      }
+      return dot / (Math.sqrt(normA) * Math.sqrt(normB));
+    }
+
+    async function semanticSearch(query) {
+      const emb = await embedder(query);
+      const queryVec = meanPool(emb[0]);
+
+      let best = { score: -1, section: null };
+      for (let i = 0; i < sections.length; i++) {
+        const score = cosineSim(queryVec, sectionEmbeddings[i]);
+        if (score > best.score) {
+          best = { score, section: sections[i] };
+        }
+      }
+      return best.score >= 0.4 ? best.section : null;
+    }
+
+    async function sendMessage() {
+      const text = inputEl.value.trim();
+      if (!text) return;
+      addMessage("user", text);
+      inputEl.value = "";
+      sendBtn.disabled = true;
+
+      const section = await semanticSearch(text);
+      if (section) {
+        addMessage("bot", "From site: " + section);
+        sendBtn.disabled = false;
+        return;
+      }
+
+      addMessage("bot", "Thinking...");
+      const output = await generator(text, { max_new_tokens: 60 });
+      messagesEl.lastChild.remove();
+      addMessage("bot", output[0].generated_text.replace(text, "").trim());
+      sendBtn.disabled = false;
+    }
+
+    sendBtn.addEventListener("click", sendMessage);
+    inputEl.addEventListener("keydown", e => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    // Initialize chatbot
+    init();
+
+
         // Toggle mobile menu visibility
         const menuButton = document.getElementById('menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
