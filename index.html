@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Legal Chicks Empowerment Network (LCEN)</title>
-    <script src="https://cdn.tailwindcss.com" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers"></script>
     <style>
         :root {
             --color-primary: #8B542F;
@@ -464,203 +464,126 @@
 
     <script>
       // --- CHATBOT SCRIPT (Improved: lazy-load models, accessibility, error handling) ---
-      const toggleBtn = document.getElementById("chatbot-toggle");
-      const panel = document.getElementById("chatbot-panel");
-      const messagesEl = document.getElementById("chatbot-messages");
-      const inputEl = document.getElementById("chatbot-text");
-      const sendBtn = document.getElementById("chatbot-send");
+        const toggleBtn = document.getElementById("chatbot-toggle");
+  const panel = document.getElementById("chatbot-panel");
+  const messagesEl = document.getElementById("chatbot-messages");
+  const inputEl = document.getElementById("chatbot-text");
+  const sendBtn = document.getElementById("chatbot-send");
 
-      let generator = null, embedder = null;
-      let modelsLoaded = false;
-      let loadingModels = false;
-      let sections = [], sectionEmbeddings = [];
+  let generator, embedder;
+  let sections = [], sectionEmbeddings = [];
+  let modelsReady = false;
 
-      // Accessibility helpers
-      function openPanel() {
-        panel.style.display = "flex";
-        panel.setAttribute("aria-hidden", "false");
-        toggleBtn.setAttribute("aria-expanded", "true");
-        inputEl.focus();
+  function addMessage(role, text) {
+    const msg = document.createElement("div");
+    msg.className = "msg " + role;
+    const bubble = document.createElement("div");
+    bubble.className = "bubble";
+    bubble.textContent = text;
+    msg.appendChild(bubble);
+    messagesEl.appendChild(msg);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function meanPool(matrix) {
+    return matrix[0].map((_, i) => matrix.reduce((sum, row) => sum + row[i], 0) / matrix.length);
+  }
+
+  function cosineSim(a, b) {
+    let dot = 0, normA = 0, normB = 0;
+    for (let i = 0; i < a.length; i++) {
+      dot += a[i] * b[i];
+      normA += a[i] * a[i];
+      normB += b[i] * b[i];
+    }
+    return dot / (Math.sqrt(normA) * Math.sqrt(normB));
+  }
+
+  async function semanticSearch(query) {
+    const emb = await embedder(query);
+    const queryVec = meanPool(emb[0]);
+
+    let best = { score: -1, section: null };
+    for (let i = 0; i < sections.length; i++) {
+      const score = cosineSim(queryVec, sectionEmbeddings[i]);
+      if (score > best.score) {
+        best = { score, section: sections[i] };
       }
-      function closePanel() {
-        panel.style.display = "none";
-        panel.setAttribute("aria-hidden", "true");
-        toggleBtn.setAttribute("aria-expanded", "false");
-        toggleBtn.focus();
-      }
+    }
+    return best.score >= 0.4 ? best.section : null;
+  }
 
-      // Toggle Chatbot Panel (lazy-load models on first open)
-      toggleBtn.addEventListener("click", async () => {
-        const isOpen = panel.style.display === "flex";
-        if (isOpen) {
-          closePanel();
-          return;
-        }
-        openPanel();
+  async function sendMessage() {
+    const text = inputEl.value.trim();
+    if (!text) return;
+    addMessage("user", text);
+    inputEl.value = "";
+    sendBtn.disabled = true;
 
-        if (!modelsLoaded && !loadingModels) {
-          await initChat(); // lazy initialize models and index page
-        }
-      });
+    if (!modelsReady) {
+      addMessage("bot", "⏳ Still loading models. Please wait...");
+      sendBtn.disabled = false;
+      return;
+    }
 
-      // Close on Escape key and simple focus handling
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && panel.style.display === "flex") {
-          closePanel();
-        }
-      });
+    const section = await semanticSearch(text);
+    if (section) {
+      addMessage("bot", "📄 From site: " + section);
+      sendBtn.disabled = false;
+      return;
+    }
 
-      // Utility function to add a message to the chat UI
-      function addMessage(role, text) {
-        const msg = document.createElement("div");
-        msg.className = "msg " + role;
-        const bubble = document.createElement("div");
-        bubble.className = "bubble";
-        bubble.textContent = text;
-        msg.appendChild(bubble);
-        messagesEl.appendChild(msg);
-        messagesEl.scrollTop = messagesEl.scrollHeight;
-      }
+    addMessage("bot", "🤔 Thinking...");
+    const output = await generator(text, { max_new_tokens: 60 });
+    messagesEl.lastChild.remove();
+    addMessage("bot", output[0].generated_text.replace(text, "").trim());
+    sendBtn.disabled = false;
+  }
 
-      // Embedding utility functions (more robust)
-      function meanPool(matrix) {
-        if (!Array.isArray(matrix) || matrix.length === 0) return [];
-        const dim = matrix[0].length;
-        const result = new Array(dim).fill(0);
-        for (let r = 0; r < matrix.length; r++) {
-          for (let i = 0; i < dim; i++) result[i] += matrix[r][i];
-        }
-        return result.map(v => v / matrix.length);
-      }
-      function cosineSim(a, b) {
-        if (!a || !b || a.length !== b.length || a.length === 0) return -1;
-        let dot = 0, normA = 0, normB = 0;
-        for (let i = 0; i < a.length; i++) {
-          dot += a[i] * b[i];
-          normA += a[i] * a[i];
-          normB += b[i] * b[i];
-        }
-        const denom = Math.sqrt(normA) * Math.sqrt(normB);
-        return denom === 0 ? -1 : dot / denom;
-      }
+  inputEl.addEventListener("keydown", e => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
 
-      // RAG Logic: Search page content for relevant answer
-      async function semanticSearch(query) {
-        if (!embedder || sections.length === 0) return null;
-        try {
-          const emb = await embedder(query);
-          const queryVec = meanPool(emb[0]);
-          let best = { score: -1, section: null };
-          for (let i = 0; i < sections.length; i++) {
-            const score = cosineSim(queryVec, sectionEmbeddings[i]);
-            if (score > best.score) {
-              best = { score, section: sections[i] };
-            }
-          }
-          return best.score >= 0.4 ? best.section : null;
-        } catch (err) {
-          console.error("semanticSearch error:", err);
-          return null;
-        }
-      }
+  toggleBtn.addEventListener("click", () => {
+    panel.style.display = panel.style.display === "flex" ? "none" : "flex";
+    inputEl.focus();
+  });
 
-      // Main chat message handler
-      async function sendMessage() {
-        const text = inputEl.value.trim();
-        if (!text) return;
-        addMessage("user", text);
-        inputEl.value = "";
-        sendBtn.disabled = true;
+  window.addEventListener("load", async () => {
+    try {
+      addMessage("bot", "⏳ Loading AI models and reading the site...");
+      embedder = await window.transformers.pipeline("feature-extraction", "Xenova/all-MiniLM-L4-v2");
+      generator = await window.transformers.pipeline("text-generation", "Xenova/distilgpt2");
 
-        // 1. Perform RAG search on the page content
-        const section = await semanticSearch(text);
+      const nodes = [
+        ...document.querySelectorAll("h2"),
+        ...document.querySelectorAll(".section-header"),
+        ...document.querySelectorAll(".card-shadow p")
+      ];
+      sections = nodes.map(n => n.textContent.trim()).filter(t => t.length > 0);
 
-        if (section) {
-          // If relevant content found, return it as a direct answer
-          addMessage("bot", "I found this on the LCEN page: " + section);
-          sendBtn.disabled = false;
-          return;
-        }
-
-        // 2. If RAG fails, fall back to the small text-generation model (with error handling)
-        addMessage("bot", "Thinking...");
-        try {
-          if (!generator) throw new Error("Text generator not available.");
-          const output = await generator(text, { max_new_tokens: 60 });
-          // Remove "Thinking..." message safely
-          if (messagesEl.lastChild && messagesEl.lastChild.querySelector('.bubble').textContent === "Thinking...") {
-            messagesEl.removeChild(messagesEl.lastChild);
-          }
-          const generated = (output && output[0] && (output[0].generated_text || output[0].text)) ? (output[0].generated_text || output[0].text) : "Sorry, I couldn't generate a response.";
-          // Trim echoed prompt if present
-          const answer = generated.replace(text, "").trim();
-          addMessage("bot", answer || generated);
-        } catch (err) {
-          console.error("generation error:", err);
-          if (messagesEl.lastChild && messagesEl.lastChild.querySelector('.bubble').textContent === "Thinking...") {
-            messagesEl.removeChild(messagesEl.lastChild);
-          }
-          addMessage("bot", "Sorry — I'm having trouble generating an answer right now.");
-        } finally {
-          sendBtn.disabled = false;
-        }
+      for (let sec of sections) {
+        const emb = await embedder(sec);
+        sectionEmbeddings.push(meanPool(emb[0]));
       }
 
-      // Event listeners for sending message
-      sendBtn.addEventListener("click", sendMessage);
-      inputEl.addEventListener("keydown", e => {
-        if (e.key === "Enter" && !e.shiftKey) {
-          e.preventDefault();
-          sendMessage();
-        }
-      });
+      modelsReady = true;
+      addMessage("bot", "✅ Ready! I’ve read this page. Ask me anything about LCEN.");
+      addMessage("bot", "💡 Try asking:");
+      addMessage("bot", "• What’s included in the starter package?");
+      addMessage("bot", "• How do I join the Legal Chicks network?");
+      addMessage("bot", "• What areas do you serve?");
+      addMessage("bot", "• What is LCEN’s business model?");
+      addMessage("bot", "• What makes LCEN different?");
+    } catch (e) {
+      addMessage("bot", "⚠️ Failed to load AI models. Please refresh or try again later.");
+      console.error("Model load error:", e);
+    }
+});
 
-      // Initialization (lazy): Load models and index page content when the user opens the chat
-      async function initChat() {
-        loadingModels = true;
-        addMessage("bot", "⏳ Loading AI models and reading the site content...");
-
-        try {
-          // Load the two required models for RAG: Embedder and Generator
-          // These are loaded lazily to avoid blocking page load / consuming bandwidth until needed.
-          embedder = await window.transformers.pipeline("feature-extraction", "Xenova/all-MiniLM-L4-v2");
-          generator = await window.transformers.pipeline("text-generation", "Xenova/distilgpt2");
-
-          // Scrape relevant text from the HTML structure (limited selectors)
-          const nodes = [
-            ...document.querySelectorAll("h2"),
-            ...document.querySelectorAll(".section-header"),
-            ...document.querySelectorAll(".card-shadow p"),
-            ...document.querySelectorAll(".hero-background p")
-          ];
-          sections = nodes.map(n => n.textContent.trim()).filter(t => t.length > 0);
-
-          // Create embeddings for all scraped sections
-          sectionEmbeddings = [];
-          for (let sec of sections) {
-            try {
-              const emb = await embedder(sec);
-              sectionEmbeddings.push(meanPool(emb[0]));
-            } catch (err) {
-              // if an embedding for one section fails, skip it and continue
-              console.warn("embedding failed for section:", sec, err);
-              sectionEmbeddings.push([]);
-            }
-          }
-
-          addMessage("bot", "✅ AI is Ready! Ask me anything about LCEN’s mission, programs, or opportunities.");
-          addMessage("bot", "💡 You can try asking:");
-          addMessage("bot", "• What is included in the Starter Opportunity Packages?");
-          addMessage("bot", "• What are LCEN's core values?");
-          addMessage("bot", "• Where is the head office located?");
-          modelsLoaded = true;
-        } catch (err) {
-          console.error("initChat error:", err);
-          addMessage("bot", "⚠️ Failed to load AI models. Please check your connection and try again.");
-        } finally {
-          loadingModels = false;
-        }
-      }
 
       // --- MOBILE MENU SCRIPT ---
       const menuButton = document.getElementById('menu-button');
